@@ -11,14 +11,8 @@
 </head>
 
 <body>
-
-<h1>Code Cleanup!</h1>
-
-<a href="login.php" id="login">login</a>
-
-
-</form>
-
+    <h1 id="heading">Code Cleanup!</h1>
+    <a href="login.php" id="login">login</a>
 </body>
 
 </html>
