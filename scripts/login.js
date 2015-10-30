@@ -36,6 +36,6 @@ function processLoginResponse(response) {
 		window.location.href = "index.php";
 	} else {
 		$("#loginErrorMsg").text(response);
-		$("#loginErrorModal").modal("show");;
+		$("#loginErrorModal").modal("show");
 	}
 }
