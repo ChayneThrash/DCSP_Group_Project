@@ -9,8 +9,6 @@ function validateUser() {
 	if (!isUserValid(username)) {
 		$("#usernameError").text("Make sure username contains no spaces and is less than 50 characters long.")
 		$(":submit").prop("disabled", true);
-		$("#loginErrorMsg").text("test");
-		$("#loginErrorModal").modal("show");
 	} else {
 		$("#usernameError").text("");
 		if(username.length == 0){ // Can't submit if field is empty.
@@ -38,6 +36,6 @@ function processLoginResponse(response) {
 		window.location.href = "index.php";
 	} else {
 		$("#loginErrorMsg").text(response);
-		$("loginErrorDialog").dialog("open");
+		$("#loginErrorModal").modal("show");;
 	}
 }
