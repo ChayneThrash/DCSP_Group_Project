@@ -1,9 +1,9 @@
 <?php
 
-$db_user = 'dcsp05'
-$db_pass = 'ab1234'
-$db_name = 'dcsp05'
-$db_server = 'localhost'
+$db_user = 'dcsp05';
+$db_pass = 'ab1234';
+$db_name = 'dcsp05';
+$db_server = 'localhost';
 
 function getConnectedDb() {
 	$db_conn = mysqli_connect($hostname,$username,$password,$database);
