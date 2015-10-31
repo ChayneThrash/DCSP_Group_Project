@@ -1,29 +1,30 @@
 <?php
 
-$db_user = 'dcsp05';
-$db_pass = 'ab1234';
-$db_name = 'dcsp05';
-$db_server = 'localhost';
-
 function getConnectedDb() {
-	$db_conn = mysqli_connect($hostname,$username,$password,$database);
-	return ($db_conn->connect_errno) ? 0 : $db_conn;
+	$db_user = 'dcsp05';
+	$db_pass = 'ab1234';
+	$db_name = 'dcsp05';
+	$db_server = 'localhost';
+	
+	$mysqli = new mysqli($db_server, $db_user, $db_pass, $db_name);
+	
+	return ($mysqli->connect_errno) ? null : $mysqli;
 }
 
 function userExists($connected_db, $username) {
-		$query = "select * from User where username = " . $username;
-		$result = $connected_db->query($query);
-		return ($result->fetch_assoc()) ? true : false;
+	$query = "select * from User where Username = '$username'";
+	$result = $connected_db->query($query);
+	return ($result->fetch_assoc()) ? true : false;
 }
 
-function checkUsernamePassword($connected_db, $username, $password) {
-	$query = "select * from User where Username = " . $username " and Password = MD5(" . $password . ")";
+function checkUsernamePassword($connected_db, $user, $pass) {
+	$query = "select * from User where Username = '$user' and Password = MD5('$pass')";
 	$result = $connected_db->query($query);
 	return ($result->fetch_assoc()) ? true : false;
 }
 
 function checkIfAdmin($connected_db, $username) {
-	$query = "select Admin from User where Username = " . $username;
+	$query = "select Admin from User where Username = '$username'";
 	$result = $connected_db->query($query);
 	if ($row = $result->fetch_assoc) {
 		return ($result['Admin']) ? true : false;
