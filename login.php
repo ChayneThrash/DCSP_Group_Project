@@ -18,7 +18,6 @@
 
 <div class="container">
   <h2>Login</h2>
-  <form role="form" id="login">
     <div class="form-group">
       <label for="Username">username</label>
       <input type="text" class="form-control" id="user" placeholder="username">
@@ -32,7 +31,6 @@
       <label><input type="checkbox"> Remember me</label>
     </div>
     <button type="submit" class="btn btn-default">Submit</button>
-  </form>
 </div>
 
 <!-- Error message pop up for logging in -->
@@ -49,7 +47,7 @@
       <div class="modal-body">
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" id="submit">Close</button>
       </div>
     </div>
 

@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	$("#user").on("input propertychange paste", validateUser);
 	$(":submit").prop("disabled", true);
-	$("#login").submit(checkLogin);
+	$(":submit").on("click", checkLogin);
 });
 
 function validateUser() {
@@ -11,7 +11,7 @@ function validateUser() {
 		$(":submit").prop("disabled", true);
 	} else {
 		$("#usernameError").text("");
-		if(username.length == 0){ // Can't submit if field is empty.
+		if(username.length === 0){ // Can't submit if field is empty.
 			$(":submit").prop("disabled", true);
 		} else {
 			$(":submit").prop("disabled", false);
@@ -27,8 +27,9 @@ function checkLogin() {
 	$.ajax({
 		method: "POST",
 		url: "ajax/checkLogin.php",
-		data: { username: $("#user").val(), password: $("#pwd").val() }
-	}).done(processLoginResponse);
+		data: { username: $("#user").val(), password: $("#pwd").val() },
+		success: processLoginResponse
+	});
 }
 
 function processLoginResponse(response) {
