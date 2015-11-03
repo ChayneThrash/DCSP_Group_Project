@@ -13,9 +13,16 @@
 
 <body>
     <h1 id="heading">Code Cleanup!</h1>
-    <a id="login"
-		<?PHP echo (isset($_SESSION['username'])) ? " href='account.php'>{$_SESSION['username']}" : " href='login.php'>login";?>
-	</a>
+    <div id='userInfo'>
+        <?PHP
+        if (isset($_SESSION['username'])) {
+            echo "<a id='login' href='account.php'>{$_SESSION['username']}</a>";
+        } else {
+            echo "<a id='login' href='login.php'>login</a>";
+            echo "<a id='register' href='registration.php'>no account? Register!</a>";
+        }
+        ?>
+    </div>
 </body>
 
 </html>
