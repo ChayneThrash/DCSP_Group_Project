@@ -1,4 +1,15 @@
 <!DOCTYPE html>
+<?PHP
+include "util/DbUtil.php";
+$db_conn = getConnectedDb();
+$securityQuestions = array();
+if (is_null($db_conn)) {
+    $errorMsg = new SecurityQuestion('error', 1);
+    $securityQuestions[] = $errorMsg;
+} else {
+    $securityQuestions = getSecurityQuestions($db_conn);
+}
+?>
 <html>
 
 <head>
@@ -26,11 +37,41 @@
         </div>
         <div class="form-group">
           <label for="pwd-reenter">Re-enter Password</label>
-          <input type="password" class="form-control" id="pwdConf" placeholder="Enter password">
+          <input type="password" class="form-control" id="pwdConf" placeholder="Re-enter password">
           <p id="pwdError"></p>
         </div>
+        <select class="form-control">
+            <option value="" selected disabled>Security Question</option>
+            <?PHP 
+            foreach($securityQuestions as $question) {
+                echo "<option>{$question->question}</option>";
+            }
+            ?>
+        </select>
         <button type="submit" class="btn btn-default">Submit</button>
     </div>
+
+    <!-- Error message pop up for logging in -->
+    <div id="registrationErrorModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Error occurred during login</h4>
+          </div>
+            <p id="registerErrorMsg"></p>
+          <div class="modal-body">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" id="submit">Close</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
 </body>
 
 </html>

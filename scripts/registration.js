@@ -55,7 +55,7 @@ function changeButtonStatus() {
 function checkLogin() {
     $.ajax({
         method: "POST",
-        url: "ajax/checkLogin.php",
+        url: "ajax/addUser.php",
         data: { username: $("#user").val(), password: $("#pwd").val() },
         success: processLoginResponse
     });
@@ -65,7 +65,7 @@ function processLoginResponse(response) {
     if (response === "success") {
         window.location.href = "index.php";
     } else {
-        $("#loginErrorMsg").text(response);
-        $("#loginErrorModal").modal("show");
+        $("#registerErrorMsg").text(response);
+        $("#registrationErrorModal").modal("show");
     }
 }
