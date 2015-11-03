@@ -40,7 +40,7 @@ if (is_null($db_conn)) {
           <input type="password" class="form-control" id="pwdConf" placeholder="Re-enter password">
           <p id="pwdError"></p>
         </div>
-        <select class="form-control">
+        <select class="form-control" id="securityQuestionDropdown">
           <option value="" selected disabled>Security Question</option>
           <?PHP 
           foreach($securityQuestions as $question) {

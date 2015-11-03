@@ -1,11 +1,15 @@
 ﻿var userValid = false;
 var pwdValid = false;
 var pwdConfValid = false;
+var securityQuestionSelected = false;
+var securityQuestionAnswered = false;
 
 $(document).ready(function () {
     $("#user").on("input propertychange paste", validateUser);
     $("#pwd").on("input propertychange paste", validatePwd);
     $("#pwdConf").on("input propertychange paste", validatePwdConf);
+    $("#securityQuestionDropdown").change(validateSecurityQuestion);
+    $("#answer").on("input propertychange paste", validateAnswer);
     $(":submit").prop("disabled", true);
     $(":submit").on("click", checkLogin);
 });
@@ -48,8 +52,22 @@ function validatePwdConf() {
     changeButtonStatus();
 }
 
+function validateSecurityQuestion() {
+    securityQuestionSelected = ($("#securityQuestionDropdown").val() !== "");
+    changeButtonStatus();
+}
+
+function validateAnswer() {
+    securityQuestionAnswered = ($("#answer").val().length !== 0);
+    changeButtonStatus();
+}
+
 function changeButtonStatus() {
-    $(":submit").prop("disabled", !(userValid && pwdValid && pwdConfValid));
+    $(":submit").prop("disabled", getButtonStatus());
+}
+
+function getButtonStatus() {
+    return !(userValid && pwdValid && pwdConfValid && securityQuestionSelected && securityQuestionAnswered);
 }
 
 function checkLogin() {
