@@ -7,6 +7,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="stylesheets/index.css">
+<script src="scripts/formValidation.js"></script>
+<script src="scripts/registration.js"></script>
 <title>Code Cleanup main page</title>
 </head>
 
@@ -24,7 +26,8 @@
         </div>
         <div class="form-group">
           <label for="pwd-reenter">Re-enter Password</label>
-          <input type="password" class="form-control" id="pwd" placeholder="Enter password">
+          <input type="password" class="form-control" id="pwdConf" placeholder="Enter password">
+          <p id="pwdError"></p>
         </div>
         <button type="submit" class="btn btn-default">Submit</button>
     </div>
