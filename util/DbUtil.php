@@ -46,6 +46,11 @@ function checkIfAdmin($connected_db, $username) {
 	}
 }
 
+function addUser($connected_db, $username, $password, $securityQuestionId, $securityQuestionAnswer) {
+    $query = "insert into User(Username, Password, SecurityQuestionId, SecurityQuestionAnswer) Values('$username', MD5('$password'), $securityQuestionId, '$securityQuestionAnswer')";
+    $result = $connected_db->query($query);
+	return $result;
+}
 
 function getSecurityQuestions($connected_db) {
     $query = "select * from SecurityQuestion";

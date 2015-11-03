@@ -74,12 +74,16 @@ function checkLogin() {
     $.ajax({
         method: "POST",
         url: "ajax/addUser.php",
-        data: { username: $("#user").val(), password: $("#pwd").val() },
-        success: processLoginResponse
+        data:
+            {
+                username: $("#user").val(), password: $("#pwd").val(), passwordConf: $("#pwdConf").val(),
+                securityQuestionId: $("#securityQuestionDropdown").val(), securityQuestionAnswer: $("#answer").val()
+            },
+        success: processRegistrationResponse
     });
 }
 
-function processLoginResponse(response) {
+function processRegistrationResponse(response) {
     if (response === "success") {
         window.location.href = "index.php";
     } else {

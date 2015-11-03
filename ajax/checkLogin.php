@@ -22,7 +22,6 @@ if(substr_count($username, ' ') != 0) {
 		$response = "success";
 		session_start();
 		$_SESSION['username'] = $username;
-		$_SESSION['password'] = $password;
 		$_SESSION['admin'] = checkIfAdmin($db_conn, $username);
 	}
 }
