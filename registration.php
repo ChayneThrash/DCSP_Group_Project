@@ -41,13 +41,17 @@ if (is_null($db_conn)) {
           <p id="pwdError"></p>
         </div>
         <select class="form-control">
-            <option value="" selected disabled>Security Question</option>
-            <?PHP 
-            foreach($securityQuestions as $question) {
-                echo "<option>{$question->question}</option>";
-            }
-            ?>
+          <option value="" selected disabled>Security Question</option>
+          <?PHP 
+          foreach($securityQuestions as $question) {
+              echo "<option value='{$question->id}'>{$question->question}</option>";
+          }
+          ?>
         </select>
+        <div class="form-group">
+          <label for="securityQuestionAnswer">Security Question Answer</label>
+          <input type="text" class="form-control" id="answer" placeholder="Security question answer">    
+        </div>
         <button type="submit" class="btn btn-default">Submit</button>
     </div>
 
