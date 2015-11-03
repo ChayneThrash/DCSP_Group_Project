@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<?PHP session_start(); ?>
 <html>
 
 <head>
@@ -12,7 +13,9 @@
 
 <body>
     <h1 id="heading">Code Cleanup!</h1>
-    <a href="login.php" id="login">login</a>
+    <a id="login"
+		<?PHP echo (isset($_SESSION['username'])) ? " href='account.php'>{$_SESSION['username']}" : " href='login.php'>login";?>
+	</a>
 </body>
 
 </html>
