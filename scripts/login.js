@@ -1,26 +1,40 @@
-$(document).ready(function() {
-	$("#user").on("input propertychange paste", validateUser);
+var userValid = false;
+var pwdValid = false;
+
+$(document).ready(function () {
+    $("#user").on("input propertychange paste", validateUser);
+    $("#pwd").on("input propertychange paste", validatePwd);
 	$(":submit").prop("disabled", true);
 	$(":submit").on("click", checkLogin);
 });
 
 function validateUser() {
-	var username = $("#user").val();
+    var username = $("#user").val();
+    var pwd = $("#pwd").val();
 	if (!isUserValid(username)) {
 		$("#usernameError").text("Make sure username contains no spaces and is less than 50 characters long.")
-		$(":submit").prop("disabled", true);
+		userValid = false;
 	} else {
 		$("#usernameError").text("");
-		if(username.length === 0){ // Can't submit if field is empty.
-			$(":submit").prop("disabled", true);
+		if((username.length === 0)){ // Can't submit if field is empty.
+		    $(":submit").prop("disabled", true);
+		    userValid = false;
 		} else {
-			$(":submit").prop("disabled", false);
+		    $(":submit").prop("disabled", false);
+		    userValid = true;
 		}
 	}
+	changeButtonStatus();
 }
 
-function isUserValid(username) {
-	return (username.length <= 50) && (username.split(' ').length === 1);
+function validatePwd() {
+    var pwd = $("#pwd").val();
+    pwdValid = (pwd.length != 0);
+    changeButtonStatus();
+}
+
+function changeButtonStatus() {
+    $(":submit").prop("disabled", !(userValid && pwdValid));
 }
 
 function checkLogin() {

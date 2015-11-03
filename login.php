@@ -8,6 +8,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="stylesheets/login.css">
+    <script src="scripts/formValidation.js"></script>
     <script src="scripts/login.js"></script>
     <title>Code Cleanup login page</title>
 </head>
