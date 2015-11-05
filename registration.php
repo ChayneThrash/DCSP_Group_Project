@@ -27,7 +27,7 @@ if (is_null($db_conn)) {
     <div class="container">
       <h2>Registration<h2>
         <div class="form-group">
-          <label for="Username">username</label>
+          <label for="Username">Username:</label>
           <input type="text" class="form-control" id="user" placeholder="username">
 	      <p id="usernameError"></p>
         </div>
