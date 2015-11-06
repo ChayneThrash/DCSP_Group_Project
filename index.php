@@ -33,6 +33,13 @@ if (is_null($db_conn)) {
         }
         ?>
     </div>
+    <div id='ContentSubmission'>
+    <?PHP 
+        if(isset($_SESSION['username'])) { 
+            echo "<a href='submitContent.php'>SubmitContent</a>";
+    } ?>
+
+    </div>
 	<div id='Content'>
 		<?PHP
 		echo "<TABLE BORDER='5' WIDTH='50%' CELLPADDING='7' CELLSPACING='3'>";
