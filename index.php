@@ -35,7 +35,11 @@ if (is_null($db_conn)) {
     </div>
 	<div id='Content'>
 		<?PHP
-		echo "<a id='content'>{$content->content}</a>";
+		echo "<TABLE BORDER='5' WIDTH='50%' CELLPADDING='7' CELLSPACING='3'>";
+		echo "<TR><TH>Top Entries<TH></TR>";
+		echo "<TR><TH>Title</TH><TH>Content</TH></TR>";
+		echo "<TR ALIGN = 'LEFT'><TD>{$content->title}</TD><TD>{$content->content}</TD></TR>";
+		echo "</Table>";
 		?>
 	</div>
 </body>
