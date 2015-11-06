@@ -1,5 +1,15 @@
 <!DOCTYPE html>
-<?PHP session_start(); ?>
+<?PHP session_start(); 
+include "util/DbUtil.php";
+$db_conn = getConnectedDb();
+$content = array();
+if (is_null($db_conn)) {
+	$errorMsg = new Content(null,"No database found.",null,null,null,null,null,null,null);
+	$content = $errorMsg;
+} else {
+	$content = getContent($db_conn);
+}
+?>
 <html>
 
 <head>
@@ -23,6 +33,11 @@
         }
         ?>
     </div>
+	<div id='Content'>
+		<?PHP
+		echo "<a id='content'>{$content->content}</a>";
+		?>
+	</div>
 </body>
 
 </html>
