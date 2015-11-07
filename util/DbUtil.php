@@ -98,4 +98,25 @@ function getLanguages($connected_db) {
     return $languages;
 }
 
+function titleExists($connected_db, $title) {
+	$query = "select * from Content where Title = '$title'";
+	$result = $connected_db->query($query);
+	return ($result->fetch_assoc()) ? true : false;
+}
+
+function projectAccessibleByUser($connected_db, $userId, $projectId) {
+    $query = "select * from Project as p Left Join ProjectMembers as pm on p.ProjectId = pm.ProjectId where (p.ProjectId = {$projectId}) and ((p.Private = 0) or (pm.userId = {$userId}))";
+    $result = $connected_db->query($query);
+	return ($result->fetch_assoc()) ? true : false;
+}
+
+function addContent($connected_db, $userId, $title, $content, $projectId, $language) {
+    if ($language != "null") {
+        $language = "'$language'";
+    }
+    $query = "insert into Content(UserId, Title, Content, ProjectId, Language, DateMade) Values({$userId}, '$title', '$content', {$projectId}, {$language}, NOW())";
+    $result = $connected_db->query($query);
+	return $result;
+}
+
 ?>
