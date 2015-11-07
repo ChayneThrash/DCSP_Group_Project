@@ -7,6 +7,7 @@ $username = $_POST['username'];
 $password = $_POST['password'];
 
 $response = "test";
+$userObj = null;
 
 if(substr_count($username, ' ') != 0) {
 	$response = "Username must not contain a space.";
@@ -16,13 +17,14 @@ if(substr_count($username, ' ') != 0) {
 		$response = "Error connecting to database. Try again later.";
 	} elseif(!userExists($db_conn, $username)) {
 		$response = "Username does not exist.";
-	} elseif(!checkUsernamePassword($db_conn, $username, $password)) {
+	} elseif(is_null($userObj = checkUsernamePassword($db_conn, $username, $password))) {
 		$response = "Incorrect password";
 	} else {
 		$response = "success";
 		session_start();
-		$_SESSION['username'] = $username;
-		$_SESSION['admin'] = checkIfAdmin($db_conn, $username);
+		$_SESSION['username'] = $userObj->username;
+		$_SESSION['admin'] = $userObj->isAdmin;
+        $_SESSION['userid'] = $userObj->id;
 	}
 }
 

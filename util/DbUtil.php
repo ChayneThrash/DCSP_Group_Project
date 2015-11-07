@@ -1,41 +1,6 @@
 <?php
 
-
-class SecurityQuestion{
-
-    var $question;
-    var $id;
-
-    public function __construct($question, $id) {
-        $this->question = $question;
-        $this->id = $id;
-    }
-
-}
-
-class Content{
-	var $id;
-	var $title;
-	var $content;
-	var $score;
-	var $userID;
-	var $langauge;
-	var $projectID;
-	var $removed;
-	var $date_made;
-	
-	public function __construct($id, $title, $content, $score, $userID, $language, $projectID, $removed, $date_made){
-		$this->id = $id;
-		$this->title = $title;
-		$this->content = $content;
-		$this->score = $score;
-		$this->userID = $userID;
-		$this->langauge = $language;
-		$this->projectID = $projectID;
-		$this->removed = $removed;
-		$this->date_made = $date_made;
-	}
-}
+include "Classes.php";
 
 function getConnectedDb() {
 	$db_user = 'dcsp05';
@@ -57,7 +22,21 @@ function userExists($connected_db, $username) {
 function checkUsernamePassword($connected_db, $user, $pass) {
 	$query = "select * from User where Username = '$user' and Password = MD5('$pass')";
 	$result = $connected_db->query($query);
-	return ($result->fetch_assoc()) ? true : false;
+	if ($row = $result->fetch_assoc()) {
+        return new User($row['UserId'], $row['Username'], $row['Admin']);
+    } else {
+        return null;
+    }
+}
+
+function getUser($connected_db, $user) {
+    $query = "select * from User where Username = '$user'";
+    $result = $connected_db->query($query);
+	if ($row = $result->fetch_assoc()) {
+        return new User($row['UserId'], $row['Username'], $row['Admin']);
+    } else {
+        return null;
+    }
 }
 
 function checkIfAdmin($connected_db, $username) {

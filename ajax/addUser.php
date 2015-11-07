@@ -10,6 +10,7 @@ $securityQuestionId = $_POST['securityQuestionId'];
 $securityQuestionAnswer = $_POST['securityQuestionAnswer'];
 
 $response = "test";
+$userObj = null;
 
 if(substr_count($username, ' ') != 0) {
 	$response = "Username must not contain a space.";
@@ -27,11 +28,14 @@ if(substr_count($username, ' ') != 0) {
 		$response = "Username already exists.";
 	} elseif(!addUser($db_conn, $username, $password, $securityQuestionId, $securityQuestionAnswer)) {
 		$response = "Failed to add user for unknown reason.";
-	} else {
+	} elseif (is_null($userObj = getUser($db_conn, $username))) {
+        $response = "Unexpected error.";
+    } else {
 		$response = "success";
 		session_start();
-		$_SESSION['username'] = $username;
-		$_SESSION['admin'] = false;
+		$_SESSION['username'] = $userObj->username;
+		$_SESSION['admin'] = $userObj->isAdmin;
+        $_SESSION['userid'] = $userObj->id;
 	}
 }
 
