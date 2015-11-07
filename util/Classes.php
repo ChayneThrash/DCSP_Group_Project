@@ -50,13 +50,11 @@ class Content {
 
 class Project {
     var $name;
-    var $projectId;
-    var $privacySetting;    
+    var $id;  
 
-    public function __construct($name, $id, $setting) {
+    public function __construct($id, $name) {
         $this->name = $name;
-        $this->projectId = $id;
-        $this->privacySetting = $setting;
+        $this->id = $id;
     }
 
 }

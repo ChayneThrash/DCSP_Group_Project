@@ -77,4 +77,25 @@ function getContent($connected_db){
 	return $content;
 }
 
+function getProjects($connected_db, $userId) {
+    $query = "select p.ProjectId as 'ProjectId', p.ProjectName as 'ProjectName' from Project as p Left Join ProjectMembers as pm on p.ProjectId = pm.ProjectId where (p.Private = 0) or (pm.UserId = $userId)";
+	$result = $connected_db->query($query);
+	$projects = array();
+	while($row = $result->fetch_assoc()){
+		$project_entry = new Project($row['ProjectId'], $row['ProjectName']);
+		$projects[] = $project_entry;
+	}
+	return $projects;
+}
+
+function getLanguages($connected_db) {
+    $query = "select * from Language";
+    $result = $connected_db->query($query);
+    $languages = array();
+    while ($row = $result->fetch_assoc()) {
+        $languages[] = $row['Language'];
+    }
+    return $languages;
+}
+
 ?>
