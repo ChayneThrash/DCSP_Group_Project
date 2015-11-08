@@ -49,6 +49,7 @@ if (isset($_SESSION['username'])) { ?>
               }
               ?>
             </select>
+            <button class="btn btn-link" role="link" type="button" name="op" value="Link 1">Want to submit to a new project? Add here!</button>
             <select class="form-control" id="LanguageDropdown">
                 <option value="" selected disabled>Language</option>
                 <option value="null">None</option>
@@ -71,7 +72,27 @@ if (isset($_SESSION['username'])) { ?>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Error occurred during submission</h4>
               </div>
+              <div class="modal-body">
                 <p id="submissionErrorMsg"></p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="submit">Close</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Modal for adding project -->
+        <div id="addProjectModal" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add Project</h4>
+              </div>
               <div class="modal-body">
               </div>
               <div class="modal-footer">

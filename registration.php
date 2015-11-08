@@ -65,8 +65,8 @@ if (is_null($db_conn)) {
             <button type="button" class="close" data-dismiss="modal">&times;</button>
             <h4 class="modal-title">Error occurred during login</h4>
           </div>
-            <p id="registerErrorMsg"></p>
           <div class="modal-body">
+            <p id="registerErrorMsg"></p>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal" id="submit">Close</button>
