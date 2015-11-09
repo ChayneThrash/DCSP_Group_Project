@@ -7,7 +7,7 @@ if (is_null($db_conn)) {
 	$errorMsg = new Content(null,"No database found.",null,null,null,null,null,null,null);
 	$content = $errorMsg;
 } else {
-	$content = getContent($db_conn);
+	$content = getContent_top10($db_conn);
 }
 ?>
 <html>
@@ -36,16 +36,21 @@ if (is_null($db_conn)) {
     <div id='ContentSubmission'>
     <?PHP 
         if(isset($_SESSION['username'])) { 
-            echo "<a href='submitContent.php'>SubmitContent</a>";
+            echo "<a href='submitContent.php'>Submit Content</a>";
     } ?>
 
     </div>
 	<div id='Content'>
 		<?PHP
-		echo "<TABLE BORDER='5' WIDTH='50%' CELLPADDING='7' CELLSPACING='3'>";
-		echo "<TR><TH>Top Entries<TH></TR>";
-		echo "<TR><TH>Title</TH><TH>Content</TH></TR>";
-		echo "<TR ALIGN = 'LEFT'><TD>{$content->title}</TD><TD>{$content->content}</TD></TR>";
+		echo "<TABLE id='table'>";
+		echo "<TR id='top'><TH>Top Entries<TH><TH></TH><TH></TH></TR>";
+		echo "<TR><TH>Score</TH><TH>Title</TH><TH>Content</TH><TH>Language</TH></TR>";
+		for($entry = 0; $entry < 10; $entry++){
+		echo "<TR ALIGN = 'LEFT'><TD id='score'>{$content[$entry]->score}</TD>
+		<TD id='title'><a href='?.php'>{$content[$entry]->title}</a></TD>
+		<TD>{$content[$entry]->content}</TD>
+		<TD>{$content[$entry]->language}</TD></TR>";
+		}
 		echo "</Table>";
 		?>
 	</div>

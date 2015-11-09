@@ -2,9 +2,29 @@
 	text-align: left;
 }
 
-#login {
+#login{
 	position: absolute;
     top: 0px;
     right: 0px;
-	
+}
+
+#register{
+	position: absolute;
+	top: 20px;
+	right: 0px;
+}
+
+#table,th, td{
+	border: 2px solid black;
+	width: 50%;
+	height: 50px;
+}
+
+#top{
+	background-color: #00FFFF;
+}
+
+#score{
+	text-align: center;
+	font-weight: bold;
 }
