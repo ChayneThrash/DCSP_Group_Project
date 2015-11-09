@@ -23,7 +23,7 @@
   <h2>Login</h2>
     <div class="form-group">
       <label for="Username">username</label>
-      <input type="text" class="form-control" id="user" value=<?PHP echo ($rememberMe) ? $_COOKIE['rememberMe'] : "";?>>
+      <input type="text" class="form-control" id="user" value=<?PHP $_COOKIE['rememberMe']; ?>>
 	  <p id="usernameError"></p>
     </div>
     <div class="form-group">
