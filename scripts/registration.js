@@ -23,10 +23,8 @@ function validateUser() {
     } else {
         $("#usernameError").text("");
         if ((username.length === 0)) { // Can't submit if field is empty.
-            $(":submit").prop("disabled", true);
             userValid = false;
         } else {
-            $(":submit").prop("disabled", false);
             userValid = true;
         }
     }
