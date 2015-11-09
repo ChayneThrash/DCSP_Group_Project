@@ -41,7 +41,7 @@ function checkLogin() {
 	$.ajax({
 		method: "POST",
 		url: "ajax/checkLogin.php",
-		data: { username: $("#user").val(), password: $("#pwd").val(), rememberMe: docuemnt.getElementById("rememberMe").checked },
+		data: { username: $("#user").val(), password: $("#pwd").val(), rememberMe: document.getElementById("rememberMe").checked },
 		success: processLoginResponse
 	});
 }
