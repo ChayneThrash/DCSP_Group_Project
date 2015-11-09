@@ -6,6 +6,8 @@ $(document).ready(function () {
     $("#pwd").on("input propertychange paste", validatePwd);
 	$(":submit").prop("disabled", true);
 	$(":submit").on("click", checkLogin);
+	validateUser(); // Call these functions so that anything the browser remembers gets validated.
+	validatePwd();
 });
 
 function validateUser() {
@@ -41,7 +43,7 @@ function checkLogin() {
 	$.ajax({
 		method: "POST",
 		url: "ajax/checkLogin.php",
-		data: { username: $("#user").val(), password: $("#pwd").val() },
+		data: { username: $("#user").val(), password: $("#pwd").val(), rememberMe: docuemnt.getElementById("rememberMe").checked },
 		success: processLoginResponse
 	});
 }

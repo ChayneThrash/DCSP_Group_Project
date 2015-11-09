@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 
+<?PHP $rememberMe = isset($_COOKIE['rememberMe']);?>
+
 <head>
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -21,7 +23,7 @@
   <h2>Login</h2>
     <div class="form-group">
       <label for="Username">username</label>
-      <input type="text" class="form-control" id="user" placeholder="username">
+      <input type="text" class="form-control" id="user" value=<?PHP echo ($rememberMe) ? $_COOKIE['rememberMe'] : "";?>>
 	  <p id="usernameError"></p>
     </div>
     <div class="form-group">
@@ -29,7 +31,7 @@
       <input type="password" class="form-control" id="pwd" placeholder="Enter password">
     </div>
     <div class="checkbox">
-      <label><input type="checkbox"> Remember me</label>
+      <label><input type="checkbox" id="rememberMe" <?PHP echo ($rememberMe) ? "checked" : ""; ?>> Remember me</label>
     </div>
     <button type="submit" class="btn btn-default">Submit</button>
 </div>
