@@ -1,5 +1,9 @@
 <!DOCTYPE html>
 <html>
+<?PHP
+session_start();
+if (!(isset($_SESSION['userid']))) {
+?>
 
 <?PHP $rememberMe = isset($_COOKIE['rememberMe']);?>
 
@@ -58,5 +62,9 @@
 </div>
 
 </body>
-
+<?PHP 
+} else {
+    echo "<h>Cannot login while logged in.</h>";
+}
+?> 
 </html>
