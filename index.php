@@ -91,16 +91,6 @@ if (is_null($db_conn)) {
 		echo "</select>";
 	?>
 	</div>
-	<div id='project'>
-	<?PHP
-		echo "<p>Project Select</p>";
-		echo "<select name='project'>";
-		foreach($projects as $project){
-			
-		}
-		echo "</select>";
-	?>
-	</div>
 </body>
 
 </html>
