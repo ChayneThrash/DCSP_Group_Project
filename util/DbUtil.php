@@ -77,6 +77,14 @@ function getContent_top10($connected_db){
 	return $content;
 }
 
+function getContent($connected_db, $id_num){
+	$query = "select * from Content where ContentId = $id_num";
+	$result = $connected_db->query($query);
+	$row = $result->fetch_assoc();
+	$content_entry = new Content($row['ContentId'], $row['Title'], $row['Content'], $row['Score'], $row['UserId'], $row['Language'], $row['ProjectId'], $row['Removed'], $row['DateMade']);
+	return $content_entry;
+}
+
 function getProjects($connected_db, $userId) {
     $query = "select p.ProjectId as 'ProjectId', p.ProjectName as 'ProjectName' from Project as p Left Join ProjectMembers as pm on p.ProjectId = pm.ProjectId where (p.Private = 0) or (pm.UserId = $userId)";
 	$result = $connected_db->query($query);

@@ -33,13 +33,6 @@ if (is_null($db_conn)) {
         }
         ?>
     </div>
-    <div id='ContentSubmission'>
-    <?PHP 
-        if(isset($_SESSION['username'])) { 
-            echo "<a href='submitContent.php'>Submit Content</a>";
-    } ?>
-
-    </div>
 	<div id='Content'>
 		<?PHP
 		echo "<TABLE id='table'>";
@@ -47,12 +40,23 @@ if (is_null($db_conn)) {
 		echo "<TR><TH>Score</TH><TH>Title</TH><TH>Content</TH><TH>Language</TH></TR>";
 		for($entry = 0; $entry < 10; $entry++){
 		echo "<TR ALIGN = 'LEFT'><TD id='score'>{$content[$entry]->score}</TD>
-		<TD id='title'><a href='content.php?={$content[$entry]->id}'>{$content[$entry]->title}</a></TD>
+		<TD id='title'><a href='content.php?id={$content[$entry]->id}'>{$content[$entry]->title}</a></TD>
 		<TD>{$content[$entry]->content}</TD>
 		<TD>{$content[$entry]->language}</TD></TR>";
 		}
 		echo "</Table>";
 		?>
+	</div>
+	<div id='ContentSubmission'>
+    <?PHP 
+        if(isset($_SESSION['username'])) { 
+            echo "<a href='submitContent.php'>Submit Content</a>";
+    } ?>
+    </div>
+	<div id='NextPage'>
+	<?PHP
+		echo "<a href='index.php?page=1'>Next Page</a>";
+	?>
 	</div>
 </body>
 
