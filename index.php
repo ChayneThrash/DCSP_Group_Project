@@ -3,11 +3,14 @@
 include "util/DbUtil.php";
 $db_conn = getConnectedDb();
 $content = array();
+$languages = array();
 if (is_null($db_conn)) {
 	$errorMsg = new Content(null,"No database found.",null,null,null,null,null,null,null);
 	$content = $errorMsg;
 } else {
 	$content = getContent_top10($db_conn);
+	$languages = getLanguages($db_conn);
+	$projects = getProjects($db_conn);
 }
 ?>
 <html>
@@ -75,6 +78,27 @@ if (is_null($db_conn)) {
 	<div id='HomePage'>
 	<?PHP
 		echo "<a href='index.php'>Home Page</a>";
+	?>
+	</div>
+	<div id='language'>
+	<?PHP
+		echo "<p>Language Select</p>";
+		echo "<select name='language'>";
+		echo "<option selected='selected'>none</option>";
+		foreach($languages as $langauge){
+			echo "<option value='{$language}'>{$language}</option>";
+		}
+		echo "</select>";
+	?>
+	</div>
+	<div id='project'>
+	<?PHP
+		echo "<p>Project Select</p>";
+		echo "<select name='project'>";
+		foreach($projects as $project){
+			
+		}
+		echo "</select>";
 	?>
 	</div>
 </body>
