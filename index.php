@@ -8,7 +8,7 @@ if (is_null($db_conn)) {
 	$errorMsg = new Content(null,"No database found.",null,null,null,null,null,null,null);
 	$content = $errorMsg;
 } else {
-	$content = getContent_top10($db_conn);
+	$content = getContent_select10($db_conn, (($_GET['page'] * 10)), (($_GET['page'] + 1)*10));
 	$languages = getLanguages($db_conn);
 }
 ?>
@@ -80,15 +80,16 @@ if (is_null($db_conn)) {
 	?>
 	</div>
 	<div id='language'>
-	<?PHP
-		echo "<p>Language Select</p>";
-		echo "<select name='language'>";
-		echo "<option selected='selected'>none</option>";
-		foreach($languages as $langauge){
-			echo "<option value='{$language}'>{$language}</option>";
-		}
-		echo "</select>";
-	?>
+		<p>Search By:</p>
+		<select class="form-control" id="LanguageDropdown">
+            <option value="" selected disabled>Language</option>
+            <option value="null">None</option>
+            <?PHP 
+            foreach($languages as $language) {
+                echo "<option value='{$language}'>{$language}</option>";
+            }
+            ?>
+        </select>
 	</div>
 </body>
 

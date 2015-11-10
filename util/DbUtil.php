@@ -66,8 +66,8 @@ function getSecurityQuestions($connected_db) {
     return $questions;
 }
 
-function getContent_top10($connected_db){
-	$query = "select * from Content order by Score desc limit 10";
+function getContent_select10($connected_db, $low, $high){
+	$query = "select * from Content order by Score desc limit $low,$high";
 	$result = $connected_db->query($query);
 	$content = array();
 	while($row = $result->fetch_assoc()){
