@@ -29,7 +29,7 @@ if (is_null($db_conn)) {
 	</div>
 	<div>
 	<?PHP
-	echo "<p>{$content->content}</p>";
+	echo "<pre>{$content->content}</pre>";
 	?>
 	</div>
 </body>
