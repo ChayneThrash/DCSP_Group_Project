@@ -10,7 +10,6 @@ if (is_null($db_conn)) {
 } else {
 	$content = getContent_top10($db_conn);
 	$languages = getLanguages($db_conn);
-	$projects = getProjects($db_conn);
 }
 ?>
 <html>
