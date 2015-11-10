@@ -16,7 +16,9 @@
 
 #table,th, td{
 	border: 2px solid black;
-	width: 50%;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	max-width: 50%;
 	height: 50px;
 }
 
@@ -51,4 +53,16 @@
 	position: absolute;
 	top: 700px;
 	left: 0px;
+}
+
+#project{
+	position: absolute;
+	top: 730px;
+	left: 150px;
+}
+
+#SearchSubmissionButton{
+	position: absolute;
+	top: 0px;
+	left: 300px;
 }

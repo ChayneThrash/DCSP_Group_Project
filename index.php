@@ -4,6 +4,7 @@ include "util/DbUtil.php";
 $db_conn = getConnectedDb();
 $content = array();
 $languages = array();
+$projects = array();
 if (is_null($db_conn)) {
 	$errorMsg = new Content(null,"No database found.",null,null,null,null,null,null,null);
 	$content = $errorMsg;
@@ -80,7 +81,7 @@ if (is_null($db_conn)) {
 	?>
 	</div>
 	<div id='language'>
-		<p>Search By:</p>
+		<p class="thick">Search By:</p>
 		<select class="form-control" id="LanguageDropdown">
             <option value="" selected disabled>Language</option>
             <option value="null">None</option>
@@ -90,6 +91,18 @@ if (is_null($db_conn)) {
             }
             ?>
         </select>
+	</div>
+	<div id='project'>
+		<select class="form-control" id="ProjectDropdown">
+            <option value="" selected disabled>Project</option>
+            <option value="null">None</option>
+            <?PHP 
+            foreach($project as $project) {
+                echo "<option value='{$project}'>{$project}</option>";
+            }
+            ?>
+        </select>
+		<button type="button" class="btn btn-primary" id="SearchSubmissionButton">Search</button>
 	</div>
 </body>
 
