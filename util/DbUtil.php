@@ -127,4 +127,17 @@ function addContent($connected_db, $userId, $title, $content, $projectId, $langu
 	return $result;
 }
 
+function projectExists($connected_db, $projectName) {
+    $query = "select * from Project where ProjectName = '$projectName'";
+    $result = $connected_db->query($query);
+    return ($result->fetch_assoc()) ? true : false;
+}
+
+function addProject($connected_db, $projectName, $isPrivate, $userId) {
+    $private = ($isPrivate === "true") ? '1' : '0';
+    $query = "call AddProject({$userId}, '$projectName', {$private})";
+    $result = $connected_db->query($query);
+    return ($result && ($row = $result->fetch_assoc())) ? $row['ProjectId'] : null;
+}
+
 ?>

@@ -8,7 +8,6 @@ if (isset($_SESSION['username'])) { ?>
     $projects = array();
     $languages = array();
     if (is_null($db_conn)) {
-        $errorMsgProject = 'error';
         $projects[] = new Project(0, 'error');
         $languages[] = 'error connecting to database';
     } else {
@@ -49,7 +48,7 @@ if (isset($_SESSION['username'])) { ?>
               }
               ?>
             </select>
-            <button class="btn btn-link" role="link" type="button" name="op" value="Link 1">Want to submit to a new project? Add here!</button>
+            <button class="btn btn-link" role="link" type="button" name="op" value="Link 1" data-toggle="modal" data-target="#addProjectModal">Want to submit to a new project? Add here!</button>
             <select class="form-control" id="LanguageDropdown">
                 <option value="" selected disabled>Language</option>
                 <option value="null">None</option>
@@ -59,7 +58,7 @@ if (isset($_SESSION['username'])) { ?>
                 }
                 ?>
             </select>
-            <button type="submit" class="btn btn-default">Submit</button>
+            <button type="submit" class="btn btn-default" id="ContentSubmissionButton">Submit</button>
         </div>
 
         <!-- Error message pop up for logging in -->
@@ -94,6 +93,25 @@ if (isset($_SESSION['username'])) { ?>
                 <h4 class="modal-title">Add Project</h4>
               </div>
               <div class="modal-body">
+                <form id="projectForm" method="post" class="form-horizontal">
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label" for="projectName">Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="projectName" placeholder="name"/>
+                        </div>
+                    </div>
+                    <div class="col-sm-offset-2 col-sm-10">
+                      <div class="checkbox">
+                        <label><input id="projectSetting" type="checkbox"/>Private?</label>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-5 col-xs-offset-3">
+                            <button type="button" class="btn btn-primary" id="ProjectSubmissionButton">Submit</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </form>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal" id="submit">Close</button>
