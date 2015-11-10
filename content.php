@@ -24,13 +24,21 @@ if (is_null($db_conn)) {
 	<h1>Code Cleanup!</h1>
 	<div id='title'>
 	<?PHP
-	echo "<p>{$content->title}</p>";
+	echo "<p class='lead'>{$content->title}</p>";
 	?>
 	</div>
 	<div>
 	<?PHP
-	echo "<pre>{$content->content}</pre>";
+	echo "<pre class='pre-scrollable'>{$content->content}</pre>";
 	?>
+	</div>
+	<div id='score'>
+	<h4>Score</h4>
+	<?PHP
+	echo "<p>{$content->score}</p>";
+	?>
+	<button type="button" id="upvote" class="btn btn-info btn-sm">Upvote</button>
+	<button type="button" id="downvote" class="btn btn-info btn-sm">Downvote</button>
 	</div>
 </body>
 </html>

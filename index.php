@@ -39,7 +39,7 @@ if (is_null($db_conn)) {
     </div>
 	<div id='Content'>
 		<?PHP
-		echo "<TABLE id='table'>";
+		echo "<TABLE id='table' class='table-striped'>";
 		echo "<TR id='top'><TH>Top Entries<TH><TH></TH><TH></TH></TR>";
 		echo "<TR><TH>Score</TH><TH>Title</TH><TH>Content</TH><TH>Language</TH></TR>";
 		for($entry = 0; $entry < 10; $entry++){
