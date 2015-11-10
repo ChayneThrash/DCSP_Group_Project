@@ -82,7 +82,7 @@ if (is_null($db_conn)) {
 	?>
 	</div>
 	<div id='language'>
-		<p>Search By:</p>
+		<p class="thick">Search By:</p>
 		<select class="form-control" id="LanguageDropdown">
             <option value="" selected disabled>Language</option>
             <option value="null">None</option>
@@ -104,6 +104,7 @@ if (is_null($db_conn)) {
             }
             ?>
         </select>
+		<button type="button" class="btn btn-primary" id="SearchSubmissionButton">Search</button>
 	</div>
 </body>
 
