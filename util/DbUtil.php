@@ -85,8 +85,13 @@ function getContent($connected_db, $id_num){
 	return $content_entry;
 }
 
-function getProjects($connected_db, $userId) {
-    $query = "select p.ProjectId as 'ProjectId', p.ProjectName as 'ProjectName' from Project as p Left Join ProjectMembers as pm on p.ProjectId = pm.ProjectId where (p.Private = 0) or (pm.UserId = $userId)";
+function getProjects($connected_db, $userId = null) {
+    $query = "";
+    if (is_null($userId)) {
+        $query = "select ProjectId, ProjectName from Project where Private = 0";
+    } else {
+        $query = "select p.ProjectId as 'ProjectId', p.ProjectName as 'ProjectName' from Project as p Left Join ProjectMembers as pm on p.ProjectId = pm.ProjectId where (p.Private = 0) or (pm.UserId = $userId)";
+    }
 	$result = $connected_db->query($query);
 	$projects = array();
 	while($row = $result->fetch_assoc()){
