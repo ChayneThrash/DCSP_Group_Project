@@ -28,3 +28,21 @@
 	text-align: center;
 	font-weight: bold;
 }
+
+#NextPage{
+	position: absolute;
+	top: 670px;
+	left: 400px;
+}
+
+#PrevPage{
+	position: absolute;
+	top: 670px;
+	left: 200px;
+}
+
+#HomePage{
+	position: absolute;
+	top: 670px;
+	left: 310px;
+}

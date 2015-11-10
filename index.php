@@ -55,7 +55,26 @@ if (is_null($db_conn)) {
     </div>
 	<div id='NextPage'>
 	<?PHP
-		echo "<a href='index.php?page=1'>Next Page</a>";
+		if(isset($_GET['page'])){
+			$nextPage = $_GET['page'] + 1;
+			echo "<a href='index.php?page={$nextPage}'>Next Page</a>";
+		}
+		else{
+			echo "<a href='index.php?page=1'>Next Page</a>";
+		}
+	?>
+	</div>
+	<div id='PrevPage'>
+	<?PHP
+		if(isset($_GET['page']) && $_GET['page'] != 0){
+			$prevPage = $_GET['page'] - 1;
+			echo "<a href='index.php?page={$prevPage}'>Previous Page</a>";
+		}
+	?>
+	</div>
+	<div id='HomePage'>
+	<?PHP
+		echo "<a href='index.php'>Home Page</a>";
 	?>
 	</div>
 </body>
