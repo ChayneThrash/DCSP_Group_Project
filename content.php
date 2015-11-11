@@ -21,6 +21,13 @@ if (is_null($db_conn)) {
 <title><?PHP echo "{$content->title}"; ?></title>
 </head>
 <body>
+
+<script>
+function upvote(){
+	document.getElementById("score").innerHTML = 1;
+}
+</script>
+
 	<h1>Code Cleanup!</h1>
 	<div id='title'>
 	<?PHP
@@ -32,12 +39,12 @@ if (is_null($db_conn)) {
 	echo "<pre class='pre-scrollable'>{$content->content}</pre>";
 	?>
 	</div>
-	<div id='score'>
+	<div>
 	<h4>Score</h4>
 	<?PHP
-	echo "<p>{$content->score}</p>";
+	echo "<p id='score'>{$content->score}</p>";
 	?>
-	<button type="button" id="upvote" class="btn btn-info btn-sm">Upvote</button>
+	<button type="button" onclick="upvote()" class="btn btn-info btn-sm">Upvote</button>
 	<button type="button" id="downvote" class="btn btn-info btn-sm">Downvote</button>
 	</div>
 </body>
