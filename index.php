@@ -22,6 +22,7 @@ if (is_null($db_conn)) {
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="stylesheets/index.css">
+<script src="scripts/index.js"></script>
 <title>Code Cleanup main page</title>
 </head>
 
@@ -30,7 +31,8 @@ if (is_null($db_conn)) {
     <div id='userInfo'>
         <?PHP
         if (isset($_SESSION['username'])) {
-            echo "<a id='login' href='account.php'>{$_SESSION['username']}</a>";
+            echo "<a id='account' href='account.php'>{$_SESSION['username']}</a>";
+            echo "<button id='logout' class='btn btn-link' role='link' type='button' name='op' value='Link 1' data-target='#addProjectModal'>Logout</button>";
         } else {
             echo "<a id='login' href='login.php'>login</a>";
             echo "<a id='register' href='registration.php'>no account? Register!</a>";
