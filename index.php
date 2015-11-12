@@ -40,12 +40,11 @@ if (is_null($db_conn)) {
 	<div id='Content'>
 		<?PHP
 		echo "<TABLE id='table' class='table-striped'>";
-		echo "<TR id='top'><TH>Top Entries<TH><TH></TH><TH></TH></TR>";
-		echo "<TR><TH>Score</TH><TH>Title</TH><TH>Content</TH><TH>Language</TH></TR>";
+		echo "<TR id='top'><TH>Top Entries<TH><TH></TH></TR>";
+		echo "<TR><TH>Score</TH><TH>Title</TH><TH>Language</TH></TR>";
 		for($entry = 0; $entry < 10; $entry++){
 		echo "<TR ALIGN = 'LEFT'><TD id='score'>{$content[$entry]->score}</TD>
 		<TD id='title'><a href='content.php?id={$content[$entry]->id}'>{$content[$entry]->title}</a></TD>
-		<TD>{$content[$entry]->content}</TD>
 		<TD>{$content[$entry]->language}</TD></TR>";
 		}
 		echo "</Table>";
