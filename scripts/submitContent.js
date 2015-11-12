@@ -122,7 +122,6 @@ function processProjectSubmissionResponse(response) {
         $('#ProjectDropdown').append($("<option></option>").attr("value", responseObj.projectId).text(responseObj.projectName));
         $("#addProjectModal").modal("toggle");
     } else {
-        $("#submissionErrorMsg").text(responseObj.status);
-        $("#contentSubmissionErrorModal").modal("show");
+        alert(responseObj.status);
     }
 }
