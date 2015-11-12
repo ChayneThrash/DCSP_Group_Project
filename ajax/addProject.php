@@ -4,7 +4,7 @@ include "../util/DbUtil.php";
 
 session_start();
 
-$projectName = $_POST['projectName'];
+$projectName = mysql_real_escape_string($_POST['projectName']);
 $isPrivate = $_POST['isPrivate'];
 
 //Response will be json.

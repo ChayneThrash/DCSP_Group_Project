@@ -3,8 +3,8 @@
 include "../util/DbUtil.php";
 
 
-$username = $_POST['username'];
-$password = $_POST['password'];
+$username = mysql_real_escape_string($_POST['username']);
+$password = mysql_real_escape_string($_POST['password']);
 
 $oneWeekMs = 3600*24*7;
 

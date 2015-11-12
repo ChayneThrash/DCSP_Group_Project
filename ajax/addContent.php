@@ -3,10 +3,11 @@
 include "../util/DbUtil.php";
 session_start();
 
-$title = $_POST['title'];
-$content = $_POST['content'];
+$title = mysql_real_escape_string($_POST['title']);
+$content = mysql_real_escape_string($_POST['content']);
 $projectId = $_POST['projectId'];
-$language = $_POST['language'];
+$language = mysql_real_escape_string($_POST['language']);
+
 
 $response = "test";
 $userObj = null;
