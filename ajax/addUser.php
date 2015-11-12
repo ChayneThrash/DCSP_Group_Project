@@ -3,11 +3,11 @@
 include "../util/DbUtil.php";
 
 
-$username = $_POST['username'];
-$password = $_POST['password'];
-$passwordConf = $_POST['passwordConf'];
+$username = mysql_real_escape_string($_POST['username']);
+$password = mysql_real_escape_string($_POST['password']);
+$passwordConf = mysql_real_escape_string($_POST['passwordConf']);
 $securityQuestionId = $_POST['securityQuestionId'];
-$securityQuestionAnswer = $_POST['securityQuestionAnswer'];
+$securityQuestionAnswer = mysql_real_escape_string($_POST['securityQuestionAnswer']);
 
 $response = "test";
 $userObj = null;
