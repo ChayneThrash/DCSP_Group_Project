@@ -20,7 +20,7 @@ function userExists($connected_db, $username) {
 }
 
 function checkUsernamePassword($connected_db, $user, $pass) {
-	$query = "select * from User where Username = '$user' and Password = MD5('$pass')";
+	$query = "select * from User where Username = '$user' and Password = MD5('$pass') and Deleted <> 1 and Banned <> 1";
 	$result = $connected_db->query($query);
 	if ($row = $result->fetch_assoc()) {
         return new User($row['UserId'], $row['Username'], $row['Admin']);

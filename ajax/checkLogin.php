@@ -27,7 +27,7 @@ if(substr_count($username, ' ') != 0) {
 	} elseif(!userExists($db_conn, $username)) {
 		$response = "Username does not exist.";
 	} elseif(is_null($userObj = checkUsernamePassword($db_conn, $username, $password))) {
-		$response = "Incorrect password";
+		$response = "Invalid username or password";
 	} else {
 		$response = "success";
 		session_start();
