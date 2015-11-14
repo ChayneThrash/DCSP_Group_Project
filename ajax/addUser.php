@@ -2,6 +2,7 @@
 
 include "../util/DbUtil.php";
 
+$usernameCorrectLength = (strlen($_POST['username']) <= 50);
 
 $username = mysql_real_escape_string($_POST['username']);
 $password = mysql_real_escape_string($_POST['password']);
@@ -12,8 +13,8 @@ $securityQuestionAnswer = mysql_real_escape_string($_POST['securityQuestionAnswe
 $response = "test";
 $userObj = null;
 
-if(substr_count($username, ' ') != 0) {
-	$response = "Username must not contain a space.";
+if ((substr_count($username, ' ') != 0) || !$usernameCorrectLength) {
+	$response = "Username must not contain a space and must not be longer than 50 characters.";
 } elseif($password != $passwordConf) {
     $response = "passwords must match";
 } elseif($securityQuestionId == "") {
