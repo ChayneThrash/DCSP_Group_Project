@@ -1,6 +1,5 @@
 ﻿var userValid = false;
-var pwdValid = false;
-var pwdConfValid = false;
+var registrationPwdValidator = new NewPasswordValidator("#pwd", "#pwdConf");
 var securityQuestionSelected = false;
 var securityQuestionAnswered = false;
 
@@ -32,17 +31,14 @@ function validateUser() {
 }
 
 function validatePwd() {
-    var pwd = $("#pwd").val();
-    pwdValid = (pwd.length != 0);
+    registrationPwdValidator.validateNewPwd();
     validatePwdConf();
     changeButtonStatus();
 }
 
 function validatePwdConf() {
-    var pwdConf = $("#pwdConf").val();
-    var pwd = $("#pwd").val();
-    pwdConfValid = (pwdConf === pwd);
-    if (!pwdConfValid) {
+    registrationPwdValidator.validateNewPwdConf();
+    if (!registrationPwdValidator.pwdConfValid) {
         $("#pwdError").text("Make sure that both passwords match");
     } else {
         $("#pwdError").text("");
@@ -65,7 +61,7 @@ function changeButtonStatus() {
 }
 
 function getButtonStatus() {
-    return !(userValid && pwdValid && pwdConfValid && securityQuestionSelected && securityQuestionAnswered);
+    return !(userValid && registrationPwdValidator.pwdValid && registrationPwdValidator.pwdConfValid && securityQuestionSelected && securityQuestionAnswered);
 }
 
 function checkLogin() {

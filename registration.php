@@ -24,6 +24,7 @@ if (!(isset($_SESSION['userid']))) {
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="stylesheets/index.css">
     <script src="scripts/formValidation.js"></script>
+    <script src="scripts/NewPasswordValidator.js"></script>
     <script src="scripts/registration.js"></script>
     <title>Code Cleanup main page</title>
     </head>
