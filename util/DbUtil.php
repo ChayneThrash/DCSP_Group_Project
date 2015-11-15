@@ -145,4 +145,22 @@ function addProject($connected_db, $projectName, $isPrivate, $userId) {
     return ($result && ($row = $result->fetch_assoc())) ? $row['ProjectId'] : null;
 }
 
+function getUserSecurityQuestion($connected_db, $userId) {
+    $query = "Select sq.Question From User u Inner Join SecurityQuestion sq on u.SecurityQuestionId = sq.QuestionId where u.UserId = {$userId}";
+    $result = $connected_db->query($query);
+    return ($row = $result->fetch_assoc()) ? $row['Question'] : null;
+}
+
+function securityQuestionAnswerCorrect($connected_db, $securityQuestionAnswer, $userId) {
+    $query = "Select SecurityQuestionAnswer from User where UserId = {$userId}";
+    $result = $connected_db->query($query);
+    return ($row = $result->fetch_assoc()) ? ($securityQuestionAnswer === $row['SecurityQuestionAnswer']) : false;
+}
+
+function changePassword($connected_db, $userId, $password) {
+    $query = "Update User Set Password = MD5('$password') where UserId = {$userId}";
+    $result = $connected_db->query($query);
+    return($result);
+}
+
 ?>
