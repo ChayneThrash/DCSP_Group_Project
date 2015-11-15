@@ -72,7 +72,7 @@ function resetPassword() {
 
 function processResetPwdResponse(response) {
     if (response === "success") {
-        alert(response);
+        alert("Password sucessfully changed.");
     } else {
         alert(response);
     }
