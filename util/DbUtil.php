@@ -160,7 +160,13 @@ function securityQuestionAnswerCorrect($connected_db, $securityQuestionAnswer, $
 function changePassword($connected_db, $userId, $password) {
     $query = "Update User Set Password = MD5('$password') where UserId = {$userId}";
     $result = $connected_db->query($query);
-    return($result);
+    return $result;
+}
+
+function changeSecurityQuestion($connected_db, $userId, $securityQuestionId) {
+    $query = "Update User Set SecurityQuestionId = {$securityQuestionId} where UserId = {$userId}";
+    $result = $connected_db->query($query);
+    return $result;
 }
 
 ?>

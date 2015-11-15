@@ -72,7 +72,7 @@ function resetPassword() {
 
 function processResetPwdResponse(response) {
     if (response === "success") {
-        alert("Password sucessfully changed.");
+        window.location.href = "account.php";
     } else {
         alert(response);
     }
