@@ -21,8 +21,6 @@ if (is_null($db_conn)) {
 <title><?PHP echo "{$content->title}"; ?></title>
 </head>
 <body>
-
-
 	<h1>Code Cleanup!</h1>
 	<div id='title'>
 	<?PHP
@@ -44,7 +42,7 @@ if (is_null($db_conn)) {
 	echo "<p id='score'>{$content->score}</p>";
 	?>
 	<button type="button" onclick="upvote()" class="btn btn-info btn-sm">Upvote</button>
-	<button type="button" id="downvote" class="btn btn-info btn-sm">Downvote</button>
+	<button type="button" onclick="downvote()" class="btn btn-info btn-sm">Downvote</button>
 	</div>
 </body>
 </html>
