@@ -1,4 +1,4 @@
 <?PHP
-$result = 2;
-echo $result;
+session_start();
+
 ?>

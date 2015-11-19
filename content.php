@@ -25,16 +25,13 @@ if (is_null($db_conn)) {
 	<div id='title'>
 	<?PHP
 	echo "<p class='lead'>{$content->title}</p>";
+	echo "<p id='contentid'>{$content->id}</p>";
 	?>
 	</div>
 	<div>
 	<?PHP
 	echo "<pre class='pre-scrollable'>{$content->content}</pre>";
 	?>
-	</div>
-	<div id='userid' value='<?PHP $_SESSION['userId'] ?>'>
-	</div>
-	<div id='contentid' value='<?PHP $_GET["id"] ?>'>
 	</div>
 	<div>
 	<h4>Score</h4>

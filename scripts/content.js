@@ -1,13 +1,13 @@
-function upvote() {
+function upvote(id) {
 	$.ajax({
-		method: "POST",
+		type: "POST",
 		url: "ajax/upvote.php",
-		data: { userid: document.getElementById("userid").val(), contentid: document.getElementById("contentid").val()},
-		success: function(result){
-			document.getElementById("score").html(result);
+		data: {contentid: $("#contentid").text()},
+		success: function(output){
+			$("#score").html(output);
 		}});
 }
 
-function downvote(){
+function downvote(id){
 	$("#score").html("2");
 }
