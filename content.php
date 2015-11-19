@@ -17,16 +17,11 @@ if (is_null($db_conn)) {
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<link rel="stylesheet" type="text/css" href="stylesheets/content.css">
+<script src="scripts/content.js"></script>
 <title><?PHP echo "{$content->title}"; ?></title>
 </head>
 <body>
 
-<script>
-function upvote(){
-	document.getElementById("score").innerHTML = 1;
-}
-</script>
 
 	<h1>Code Cleanup!</h1>
 	<div id='title'>
@@ -38,6 +33,10 @@ function upvote(){
 	<?PHP
 	echo "<pre class='pre-scrollable'>{$content->content}</pre>";
 	?>
+	</div>
+	<div id='userid' value='<?PHP $_SESSION['userId'] ?>'>
+	</div>
+	<div id='contentid' value='<?PHP $_GET["id"] ?>'>
 	</div>
 	<div>
 	<h4>Score</h4>
