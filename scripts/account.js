@@ -1,6 +1,9 @@
-﻿resetPwdSecurityQuestionSelected = !resetPwdNeedsNewSecurityQuestion(); 
-resetPwdSecurityQuestionAnswered = false;
-resetPwdValidator = new NewPasswordValidator("#resetPwdPwd", "#resetPwdPwdConf");
+﻿var resetPwdSecurityQuestionSelected = !resetPwdNeedsNewSecurityQuestion(); 
+var resetPwdSecurityQuestionAnswered = false;
+var resetPwdValidator = new NewPasswordValidator("#resetPwdPwd", "#resetPwdPwdConf");
+
+var changePwdCurrentPwdValid = ($("#changePwdCurrentPwd").length != 0);
+var changePwdValidator = new NewPasswordValidator("#changePwdPwd", "#changePwdPwdConf");
 
 $(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
@@ -12,6 +15,12 @@ $(document).ready(function () {
     if (document.getElementById("ResetPwdSecurityQuestionDropdown") != null) {
         $("#ResetPwdSecurityQuestionDropdown").change(validateResetPwdSecurityQuestion);
     }
+
+    $("#changePwdCurrentPwd").on("input propertychange paste", changePwdValidateCurrentPwd);
+    $("#changePwdPwd").on("input propertychange paste", changePwdValidatePwd);
+    $("#changePwdPwdConf").on("input propertychange paste", changePwdValidatePwdConf);
+    $("#ChangePwdSubmissionButton").prop("disabled", true);
+    $("#ChangePwdSubmissionButton").on("click", changePassword);
 });
 
 function resetPwdNeedsNewSecurityQuestion() {
@@ -30,25 +39,53 @@ function resetPwdValidatePwdConf() {
     } else {
         $("#resetPwdError").text("");
     }
-    changeButtonStatus();
+    changeResetPwdButtonStatus();
 }
 
-function changeButtonStatus() {
-    $("#ResetPwdSubmissionButton").prop("disabled", getButtonStatus());
+function changePwdValidatePwd() {
+    changePwdValidator.validateNewPwd();
+    changePwdValidatePwdConf();
 }
 
-function getButtonStatus() {
+function changePwdValidatePwdConf() {
+    changePwdValidator.validateNewPwdConf();
+    if (!changePwdValidator.pwdConfValid) {
+        $("#changePwdError").text("Make sure that both passwords match");
+    } else {
+        $("#changePwdError").text("");
+    }
+    changeChangePwdButtonStatus();
+}
+
+function changePwdValidateCurrentPwd() {
+    changePwdCurrentPwdValid = ($("#changePwdCurrentPwd").length != 0);
+    changeChangePwdButtonStatus();
+}
+
+function changeResetPwdButtonStatus() {
+    $("#ResetPwdSubmissionButton").prop("disabled", isResetPwdButtonDisabled());
+}
+
+function isResetPwdButtonDisabled() {
     return !(resetPwdValidator.pwdValid && resetPwdValidator.pwdConfValid && resetPwdSecurityQuestionSelected && resetPwdSecurityQuestionAnswered);
+}
+
+function changeChangePwdButtonStatus() {
+    $("#ChangePwdSubmissionButton").prop("disabled", isChangePwdButtonDisabled());
+}
+
+function isChangePwdButtonDisabled() {
+    return !(changePwdValidator.pwdValid && changePwdValidator.pwdConfValid && changePwdCurrentPwdValid);
 }
 
 function validateResetPwdSecurityQuestion() {
     resetPwdSecurityQuestionSelected = ($("#ResetPwdSecurityQuestionDropdown").val() !== "");
-    changeButtonStatus();
+    changeResetPwdButtonStatus();
 }
 
 function validateResetPwdSecurityQuestionAnswer() {
     resetPwdSecurityQuestionAnswered = ($("#resetPwdSecurityQuestionAnswer").val().length !== 0);
-    changeButtonStatus();
+    changeResetPwdButtonStatus();
 }
 
 function resetPassword() {
@@ -71,6 +108,27 @@ function resetPassword() {
 }
 
 function processResetPwdResponse(response) {
+    if (response === "success") {
+        window.location.href = "account.php";
+    } else {
+        alert(response);
+    }
+}
+
+function changePassword() {
+    $.ajax({
+        method: "POST",
+        url: "ajax/changePassword.php",
+        data: 
+            {
+                currentPassword: $("#changePwdCurrentPwd").val(), newPassword: $("#changePwdPwd").val(),
+                newPasswordConf: $("#changePwdPwdConf").val()
+            },
+        success: processResetPwdResponse
+    });
+}
+
+function processChangePwdResponse(response) {
     if (response === "success") {
         window.location.href = "account.php";
     } else {

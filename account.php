@@ -39,7 +39,7 @@ if (isset($_SESSION['username'])) { ?>
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Add Project</h4>
+                <h4 class="modal-title">Reset Password</h4>
               </div>
               <div class="modal-body">
                 <form id="projectForm" method="post" class="form-horizontal">
@@ -107,25 +107,33 @@ if (isset($_SESSION['username'])) { ?>
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Add Project</h4>
+                <h4 class="modal-title">Change Password</h4>
               </div>
               <div class="modal-body">
                 <form id="projectForm" method="post" class="form-horizontal">
                     <div class="form-group">
-                        <label  class="col-sm-2 control-label" for="projectName">Name</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="projectName" placeholder="name"/>
+                        <label  class="col-sm-4 control-label" for="password">Current Password</label>
+                        <div class="col-sm-8">
+                            <input type="password" class="form-control" id="changePwdCurrentPwd" placeholder="current password"/>
                         </div>
                     </div>
-                        <div class="form-group">
-                            <label  class="col-sm-2 control-label" for="projectName">Name</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="projectName" placeholder="name"/>
-                            </div>
+                    <div class="form-group">
+                        <label  class="col-sm-4 control-label" for="password">New Password</label>
+                        <div class="col-sm-8">
+                            <input type="password" class="form-control" id="changePwdPwd" placeholder="password"/>
+                        </div>
                     </div>
                     <div class="form-group">
+                        <label  class="col-sm-4 control-label" for="password">Confirm Password</label>
+                        <div class="col-sm-8">
+                            <input type="password" class="form-control" id="changePwdPwdConf" placeholder="password"/>
+                        </div>
+                    </div>
+                    <p class="col-sm-4"></p>
+                    <p class="col-sm-8" id="changePwdError"></p>
+                    <div class="form-group">
                         <div class="col-xs-5 col-xs-offset-3">
-                            <button type="button" class="btn btn-primary" id="ProjectSubmissionButton">Submit</button>
+                            <button type="button" class="btn btn-primary" id="ChangePwdSubmissionButton">Submit</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                         </div>
                     </div>

@@ -29,6 +29,12 @@ function checkUsernamePassword($connected_db, $user, $pass) {
     }
 }
 
+function checkPassword($connected_db, $userId, $pass) {
+    $query = "select * from User Where UserId = {$userId} and Password = MD5('$pass')";
+    $result = $connected_db->query($query);
+    return ($result->fetch_assoc()) ? true : false;
+}
+
 function getUser($connected_db, $user) {
     $query = "select * from User where Username = '$user'";
     $result = $connected_db->query($query);
