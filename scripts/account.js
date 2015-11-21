@@ -21,6 +21,8 @@ $(document).ready(function () {
     $("#changePwdPwdConf").on("input propertychange paste", changePwdValidatePwdConf);
     $("#ChangePwdSubmissionButton").prop("disabled", true);
     $("#ChangePwdSubmissionButton").on("click", changePassword);
+
+    $("#deleteAccount").on("click", deleteAccount)
 });
 
 function resetPwdNeedsNewSecurityQuestion() {
@@ -131,6 +133,24 @@ function changePassword() {
 function processChangePwdResponse(response) {
     if (response === "success") {
         window.location.href = "account.php";
+    } else {
+        alert(response);
+    }
+}
+
+function deleteAccount() {
+    if (window.confirm("Are you sure?")) {
+        $.ajax({
+            method: "POST",
+            url: "ajax/deleteAccount.php",
+            success: processDeleteAccountResponse
+        });
+    }
+}
+
+function processDeleteAccountResponse(response) {
+    if (response === "success") {
+        window.location.href = "index.php";
     } else {
         alert(response);
     }

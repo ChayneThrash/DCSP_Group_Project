@@ -28,7 +28,7 @@ if (isset($_SESSION['username'])) { ?>
             <h2>Hi <?PHP echo "{$_SESSION['username']}.";?> Manage your account here!</h2>
             <button class="btn btn-link" role="link" type="button" name="op" value="Link 1" data-toggle="modal" data-target="#ResetPasswordModal">Reset Password</button>
             <button class="btn btn-link" role="link" type="button" name="op" value="Link 1" data-toggle="modal" data-target="#ChangePasswordModal">Change Password</button>
-            <button class="btn btn-link" role="link" type="button" name="op" value="Link 1" data-toggle="modal" >Delete Account</button>
+            <button class="btn btn-link" role="link" type="button" name="op" value="Link 1" id="deleteAccount" >Delete Account</button>
         </div>
 
                 <!-- Modal for adding project -->
