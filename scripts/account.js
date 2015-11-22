@@ -2,8 +2,11 @@
 var resetPwdSecurityQuestionAnswered = false;
 var resetPwdValidator = new NewPasswordValidator("#resetPwdPwd", "#resetPwdPwdConf");
 
-var changePwdCurrentPwdValid = ($("#changePwdCurrentPwd").length != 0);
+var changePwdCurrentPwdValid = false;
 var changePwdValidator = new NewPasswordValidator("#changePwdPwd", "#changePwdPwdConf");
+
+var changeSecurityQuestionSelected = false;
+var changeSecurityQuestionAnswerValid = false;
 
 $(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
@@ -22,7 +25,12 @@ $(document).ready(function () {
     $("#ChangePwdSubmissionButton").prop("disabled", true);
     $("#ChangePwdSubmissionButton").on("click", changePassword);
 
-    $("#deleteAccount").on("click", deleteAccount)
+    $("#deleteAccount").on("click", deleteAccount);
+
+    $("#newSecurityQuestionAnswer").on("input propertychange paste", validateChangeSecurityQuestionAnswer);
+    $("#newSecurityQuestionDropdown").change(validateChangeSecurityQuestion);
+    $("#ChangeSecurityQuestionSubmissionButton").prop("disabled", true);
+    $("#ChangeSecurityQuestionSubmissionButton").on("click", changeSecurityQuestion);
 });
 
 function resetPwdNeedsNewSecurityQuestion() {
@@ -80,6 +88,14 @@ function isChangePwdButtonDisabled() {
     return !(changePwdValidator.pwdValid && changePwdValidator.pwdConfValid && changePwdCurrentPwdValid);
 }
 
+function changeChangeSecurityQuestionButtonStatus() {
+    $("#ChangeSecurityQuestionSubmissionButton").prop("disabled", isChangeSecurityQuestionButtonDisabled());
+}
+
+function isChangeSecurityQuestionButtonDisabled() {
+    return !(changeSecurityQuestionSelected && changeSecurityQuestionAnswerValid);
+}
+
 function validateResetPwdSecurityQuestion() {
     resetPwdSecurityQuestionSelected = ($("#ResetPwdSecurityQuestionDropdown").val() !== "");
     changeResetPwdButtonStatus();
@@ -88,6 +104,16 @@ function validateResetPwdSecurityQuestion() {
 function validateResetPwdSecurityQuestionAnswer() {
     resetPwdSecurityQuestionAnswered = ($("#resetPwdSecurityQuestionAnswer").val().length !== 0);
     changeResetPwdButtonStatus();
+}
+
+function validateChangeSecurityQuestion() {
+    changeSecurityQuestionSelected = ($("#newSecurityQuestionDropdown").val() !== "");
+    changeChangeSecurityQuestionButtonStatus();
+}
+
+function validateChangeSecurityQuestionAnswer() {
+    changeSecurityQuestionAnswerValid = ($("#newSecurityQuestionAnswer").val().length !== 0);
+    changeChangeSecurityQuestionButtonStatus();
 }
 
 function resetPassword() {
@@ -149,6 +175,26 @@ function deleteAccount() {
 }
 
 function processDeleteAccountResponse(response) {
+    if (response === "success") {
+        window.location.href = "index.php";
+    } else {
+        alert(response);
+    }
+}
+
+function changeSecurityQuestion() {
+    $.ajax({
+        method: "POST",
+        url: "ajax/changeSecurityQuestion.php",
+        data: 
+            {
+                securityQuestion: $("#newSecurityQuestionDropdown").val(), answer: $("#newSecurityQuestionAnswer").val()
+            },
+        success: processChangeSecurityQuestionResponse
+    });
+}
+
+function processChangeSecurityQuestionResponse(response) {
     if (response === "success") {
         window.location.href = "index.php";
     } else {

@@ -7,8 +7,11 @@ if (isset($_SESSION['username'])) { ?>
     $securityQuestionMessage = "A system error occurred which removed your previous security question. Your answer has remained the same.";
     $db_conn = getConnectedDb();
     $securityQuestion = "error connecting to database";
+    $questions = array();
+    $questions[] =  new SecurityQuestion("error connecting to database", "");
     if (!is_null($db_conn)) {
         $securityQuestion = getUserSecurityQuestion($db_conn, $_SESSION['userid']);
+        $questions = getSecurityQuestions($db_conn);
     }
     ?>
     <html>
@@ -28,6 +31,7 @@ if (isset($_SESSION['username'])) { ?>
             <h2>Hi <?PHP echo "{$_SESSION['username']}.";?> Manage your account here!</h2>
             <button class="btn btn-link" role="link" type="button" name="op" value="Link 1" data-toggle="modal" data-target="#ResetPasswordModal">Reset Password</button>
             <button class="btn btn-link" role="link" type="button" name="op" value="Link 1" data-toggle="modal" data-target="#ChangePasswordModal">Change Password</button>
+            <button class="btn btn-link" role="link" type="button" name="op" value="Link 1" data-toggle="modal" data-target="#ChangeSecurityQuestionModal">Change Security Question</button>
             <button class="btn btn-link" role="link" type="button" name="op" value="Link 1" id="deleteAccount" >Delete Account</button>
         </div>
 
@@ -51,7 +55,6 @@ if (isset($_SESSION['username'])) { ?>
                             <select class='form-control-static' id='ResetPwdSecurityQuestionDropdown'>
                                 <option value="" selected disabled>Security Question</option>
                                 <?PHP 
-                                $questions = getSecurityQuestions($db_conn);
                                 foreach($questions as $question) {
                                     echo "<option value='{$question->id}'>{$question->question}</option>";
                                 }
@@ -146,6 +149,53 @@ if (isset($_SESSION['username'])) { ?>
 
           </div>
         </div>
+
+                <div id="ChangeSecurityQuestionModal" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Reset Password</h4>
+              </div>
+              <div class="modal-body">
+                <form id="projectForm" method="post" class="form-horizontal">
+                    <div class="form-group">
+                        <label  class="col-sm-4 control-label" for="SecurityQuestion"><?PHP echo (is_null($securityQuestion)) ? "Please select a new question" : "SecurityQuestion:"; ?></label>
+                        <div class="col-sm-8">
+                            <select class='form-control-static' id='newSecurityQuestionDropdown'>
+                                <option value="" selected disabled>Choose Security Question</option>
+                                <?PHP 
+                                foreach($questions as $question) {
+                                    echo "<option value='{$question->id}'>{$question->question}</option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-4 control-label" for="securityQuestion">New Answer</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="newSecurityQuestionAnswer" placeholder="answer"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-5 col-xs-offset-3">
+                            <button type="button" class="btn btn-primary" id="ChangeSecurityQuestionSubmissionButton">Submit</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="submit">Close</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
         <script src="scripts/account.js"></script> <!--This must be here! There is a check to see if an ID exists that fails if it is executed before the id is read.-->
     </body>
 <?PHP } else {  

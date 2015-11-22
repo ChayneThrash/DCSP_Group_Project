@@ -175,6 +175,12 @@ function changeSecurityQuestion($connected_db, $userId, $securityQuestionId) {
     return $result;
 }
 
+function changeSecurityQuestionAndAnswer($connected_db, $userId, $securityQuestionId, $securityQuestionAnswer){
+    $query = "Update User Set SecurityQuestionId = {$securityQuestionId}, SecurityQuestionAnswer = '$securityQuestionAnswer' where UserId = {$userId}";
+    $result = $connected_db->query($query);
+    return $result;
+}
+
 function markAccountAsDeleted($connected_db, $userId) {
     $query = "Update User Set Deleted = 1 Where UserId = {$userId}";
     $result = $connected_db->query($query);
