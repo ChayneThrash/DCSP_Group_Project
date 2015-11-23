@@ -40,29 +40,29 @@ if (is_null($db_conn)) {
         ?>
     </div>
 	
-<div class="container">
+<div class="container-fluid">
 	<?PHP
 	for($entry = 0; $entry < 10; $entry++){
 	echo 
 	"<div class='row'>
-		<div class='col-sm-2'>
+		<div class='col-sm-1 text-left'>
 		<button type='button' onclick='upvote()' class='btn btn-info btn-sm'>upvote</button>
 		</div>
-		<div class='col-sm-10'>
+		<div class='col-sm-11 text-left'>
 		<nobr><a href='content.php?id={$content[$entry]->id}'>{$content[$entry]->title}</a></nobr>
 		</div>
 	</div>
 	<div class='row'>
-		<div class='col-sm-2'>
+		<div class='col-sm-1 text-left'>
 		<button type='button' onclick='downvote()' class='btn btn-info btn-sm'>downvote</button>
 		</div>
-		<div class='col-sm-3'>
-		<nobr>{$content[$entry]->score}</nobr>
+		<div class='col-sm-2 text-left'>
+		<nobr>Current Score: {$content[$entry]->score}</nobr>
 		</div>
-		<div class='col-sm-3'>
-		<nobr>{$content[$entry]->date_made}</nobr>
+		<div class='col-sm-2 text-left'>
+		<nobr>Date Made: {$content[$entry]->date_made}</nobr>
 		</div>
-		<div class='col-sm-4'>
+		<div class='col-sm-7 text-left'>
 		<nobr>{$content[$entry]->language}</nobr>
 		</div>
 	</div>
