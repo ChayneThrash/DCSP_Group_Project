@@ -39,26 +39,59 @@ if (is_null($db_conn)) {
         }
         ?>
     </div>
-	<div id='Content'>
-		<?PHP
-		echo "<TABLE id='table' class='table-striped'>";
-		echo "<TR id='top'><TH>Top Entries<TH><TH></TH></TR>";
-		echo "<TR><TH>Score</TH><TH>Title</TH><TH>Language</TH></TR>";
-		for($entry = 0; $entry < 10; $entry++){
-		echo "<TR ALIGN = 'LEFT'><TD id='score'>{$content[$entry]->score}</TD>
-		<TD id='title'><a href='content.php?id={$content[$entry]->id}'>{$content[$entry]->title}</a></TD>
-		<TD>{$content[$entry]->language}</TD></TR>";
-		}
-		echo "</Table>";
-		?>
+	
+<div class="container">
+	<?PHP
+	for($entry = 0; $entry < 10; $entry++){
+	echo 
+	"<div class='row'>
+		<div class='col-sm-2'>
+		<button type='button' onclick='upvote()' class='btn btn-info btn-sm'>upvote</button>
+		</div>
+		<div class='col-sm-10'>
+		<nobr><a href='content.php?id={$content[$entry]->id}'>{$content[$entry]->title}</a></nobr>
+		</div>
 	</div>
-	<div id='ContentSubmission'>
-    <?PHP 
+	<div class='row'>
+		<div class='col-sm-2'>
+		<button type='button' onclick='downvote()' class='btn btn-info btn-sm'>downvote</button>
+		</div>
+		<div class='col-sm-3'>
+		<nobr>{$content[$entry]->score}</nobr>
+		</div>
+		<div class='col-sm-3'>
+		<nobr>{$content[$entry]->date_made}</nobr>
+		</div>
+		<div class='col-sm-4'>
+		<nobr>{$content[$entry]->language}</nobr>
+		</div>
+	</div>
+	<p></p>
+	";}
+	?>
+	
+	
+	<div class="row">
+	<div class="col-sm-3">
+	<?PHP 
         if(isset($_SESSION['username'])) { 
             echo "<a href='submitContent.php'>Submit Content</a>";
     } ?>
-    </div>
-	<div id='NextPage'>
+	</div>
+	<div class="col-sm-3">
+	<?PHP
+		if(isset($_GET['page']) && $_GET['page'] != 0){
+			$prevPage = $_GET['page'] - 1;
+			echo "<a href='index.php?page={$prevPage}'>Previous Page</a>";
+		}
+	?>
+	</div>
+	<div class="col-sm-3">
+	<?PHP
+		echo "<a href='index.php'>Home Page</a>";
+	?>
+	</div>
+	<div class="col-sm-3">
 	<?PHP
 		if(isset($_GET['page'])){
 			$nextPage = $_GET['page'] + 1;
@@ -69,21 +102,14 @@ if (is_null($db_conn)) {
 		}
 	?>
 	</div>
-	<div id='PrevPage'>
-	<?PHP
-		if(isset($_GET['page']) && $_GET['page'] != 0){
-			$prevPage = $_GET['page'] - 1;
-			echo "<a href='index.php?page={$prevPage}'>Previous Page</a>";
-		}
-	?>
 	</div>
-	<div id='HomePage'>
-	<?PHP
-		echo "<a href='index.php'>Home Page</a>";
-	?>
+	<p></p>
+	
+	<div class="row">
+	<div class="col-sm-2">
+	<nobr>Search By:</nobr>
 	</div>
-	<div id='language'>
-		<p class="thick">Search By:</p>
+	<div class="col-sm-3">
 		<select class="form-control" id="LanguageDropdown">
             <option value="" selected disabled>Language</option>
             <option value="null">None</option>
@@ -94,8 +120,7 @@ if (is_null($db_conn)) {
             ?>
         </select>
 	</div>
-    <div id='project'>
-		<p>Search By:</p>
+	<div class="col-sm-3">
 		<select class="form-control" id="ProjectDropdown">
             <option value="" selected disabled>Project</option>
             <option value="null">None</option>
@@ -105,8 +130,13 @@ if (is_null($db_conn)) {
             }
             ?>
         </select>
-		<button type="button" class="btn btn-primary" id="SearchSubmissionButton">Search</button>
 	</div>
+	<div class="col-sm-2">
+	<button type="button" class="btn btn-primary" id="SearchSubmissionButton">Search</button>
+	</div>
+	</div>
+</div>
+
 </body>
 
 </html>
