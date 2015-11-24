@@ -49,7 +49,9 @@ if (is_null($db_conn)) {
         <div class='panel-body'>
             <div class='row'>
 		        <div class='col-sm-1 text-left'>
-		        <button type='button' onclick='upvote()' class='btn btn-info btn-sm'>upvote</button>
+		        <button type='button' onclick='upvote()'>
+				<span class='glyphicon glyphicon-chevron-up'></span>
+				</button>
 		        </div>
 		        <div class='col-sm-11 text-left'>
 		        <nobr><a href='content.php?id={$content[$entry]->id}'>{$content[$entry]->title}</a></nobr>
@@ -57,7 +59,9 @@ if (is_null($db_conn)) {
 	        </div>
 	        <div class='row'>
 		        <div class='col-sm-1 text-left'>
-		        <button type='button' onclick='downvote()' class='btn btn-info btn-sm'>downvote</button>
+		        <button type='button' onclick='downvote()'>
+				<span class='glyphicon glyphicon-chevron-down'></span>
+				</button>
 		        </div>
 		        <div class='col-sm-2 text-left'>
 		        <nobr>Current Score: {$content[$entry]->score}</nobr>
