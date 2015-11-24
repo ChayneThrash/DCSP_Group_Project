@@ -145,6 +145,8 @@ if (is_null($db_conn)) {
 	</div>
 	</div>
 </div>
+<p></p>
+<p></p>
 
 </body>
 
