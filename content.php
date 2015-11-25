@@ -41,9 +41,14 @@ if (is_null($db_conn)) {
 	<?PHP
 	echo "<p id='score'>{$content->score}</p>";
 	?>
-	<button type="button" onclick="upvote()" class="btn btn-info btn-sm">Upvote</button>
-	<button type="button" onclick="downvote()" class="btn btn-info btn-sm">Downvote</button>
-	<button type="button" onclick="comment()" class="btn btn-info btn-sm">Comment</button>
+
+	<button type='button' onclick='upvote()'>
+	<span class='glyphicon glyphicon-chevron-up'></span>
+	</button>
+	<button type='button' onclick='downvote()'>
+	<span class='glyphicon glyphicon-chevron-down'></span>
+	</button>
+    <button type="button" onclick="comment()" class="btn btn-info btn-sm">Comment</button>
 	</div>
         <div class="row">
             <div class="col-sm-4"></div>
@@ -52,6 +57,7 @@ if (is_null($db_conn)) {
 	    <?PHP
         echo "<p "
         ?>
+
 	</div>
 
 </div>

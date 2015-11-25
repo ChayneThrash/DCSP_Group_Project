@@ -187,4 +187,34 @@ function markAccountAsDeleted($connected_db, $userId) {
     return $result;
 }
 
+function checkUserVote($connected_db, $userId, $contentId){
+	$query = "Select VoteType From ContentVoting where UserId = {$userId} and ContentId = ${contentId}";
+	$result = $connected_db->query($query);
+	return $result;
+}
+
+function addContentScore($connected_db, $contentId){
+	$query = "Update Content Set Score= (Score + 1) Where ContentId = {$contentId}";
+	$result = $connected_db->query($query);
+	return $result;
+}
+
+function upvoteContentVoting($connected_db, $userId, $contentId){
+	$query = "Update ContentVoting Set VoteType = 'u' Where ContentId = {$contentId} and UserId = {$userId}";
+	$result = $connected_db->query($query);
+	return $result;
+}
+
+function getContentScore($connected_db, $contentId){
+	$query = "Select Score from Content where ContentId = {$contentId}";
+	$result = $connected_db->query($query);
+	return $result;
+}
+
+function insertContentVoting($connected_db, $userId, $contentId){
+	$query = "Insert Into ContentVoting (ContentId, UserId, VoteType) values ({$contentId}, {$userId}, 'n')";
+	$result = $connected_db->query($query);
+	return $result;
+}
+
 ?>
