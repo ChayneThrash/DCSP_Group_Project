@@ -19,8 +19,11 @@ if (is_null($db_conn)) {
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script src="scripts/content.js"></script>
 <title><?PHP echo "{$content->title}"; ?></title>
+
 </head>
 <body>
+
+<div class="container-fluid">
 	<h1>Code Cleanup!</h1>
 	<div id='title'>
 	<?PHP
@@ -40,6 +43,18 @@ if (is_null($db_conn)) {
 	?>
 	<button type="button" onclick="upvote()" class="btn btn-info btn-sm">Upvote</button>
 	<button type="button" onclick="downvote()" class="btn btn-info btn-sm">Downvote</button>
+	<button type="button" onclick="comment()" class="btn btn-info btn-sm">Comment</button>
 	</div>
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-8">
+
+	    <?PHP
+        echo "<p "
+        ?>
+	</div>
+
+</div>
+
 </body>
 </html>

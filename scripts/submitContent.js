@@ -20,7 +20,7 @@ $(document).ready(function () {
 function validateTitle() {
     var title = $("#title").val();
     if (!isTitleValid(title)) {
-        $("#titleError").text("Make sure title is less than or equal to 50 characters long.")
+        $("#titleError").text("Make sure title is less than or equal to 50 characters long.");
         titleValid = false;
     } else {
         $("#titleError").text("");
@@ -40,7 +40,7 @@ function isTitleValid(title) {
 function validateProjectName() {
     var name = $("#projectName").val();
     if (!(name.length <= 50)) {
-        $("#projectNameError").text("Make sure name is less than or equal to 50 characters long.")
+        $("#projectNameError").text("Make sure name is less than or equal to 50 characters long.");
         projectNameValid = false;
     } else {
         $("#projectNameError").text("");
@@ -55,7 +55,7 @@ function validateProjectName() {
 
 function validateContent() {
     var content = $("#content").val();
-    contentValid = (content.length != 0);
+    contentValid = (content.length !== 0);
     changeButtonStatus();
 }
 

@@ -59,4 +59,10 @@ class Project {
 
 }
 
+class Comment {
+}
+
+class Reply {
+}
+
 ?>

@@ -1,7 +1,17 @@
+
 #title {
 	font-size: 30px;
 }
 
 #content {
 	font-size: 14px;
+}
+
+#comment {
+    font-size: 11px;
+    
+}
+
+#reply {
+    font-size: 11px;
 }
