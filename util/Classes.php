@@ -51,10 +51,12 @@ class Content {
 class Project {
     var $name;
     var $id;  
+    var $isPrivate;
 
-    public function __construct($id, $name) {
+    public function __construct($id, $name, $isPrivate = false) {
         $this->name = $name;
         $this->id = $id;
+        $this->isPrivate = $isPrivate;
     }
 
 }

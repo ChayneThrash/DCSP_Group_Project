@@ -217,4 +217,14 @@ function insertContentVoting($connected_db, $userId, $contentId){
 	return $result;
 }
 
+function getProjectsUserIsAMemberOf($connected_db, $userId) {
+    $query = "Select p.ProjectName, p.ProjectId, p.Private from ProjectMembers pm Left Join Project p on pm.ProjectId = p.ProjectId where pm.UserId = {$userId}";
+    $result = $connected_db->query($query);
+    $projects = array();
+    while ($row = $result->fetch_assoc()) {
+        $projects[] = new Project($row['ProjectId'], $row['ProjectName'], ($row['Private']) ? true : false);
+    }
+    return $projects;
+}
+
 ?>

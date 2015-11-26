@@ -9,9 +9,12 @@ if (isset($_SESSION['username'])) { ?>
     $securityQuestion = "error connecting to database";
     $questions = array();
     $questions[] =  new SecurityQuestion("error connecting to database", "");
+    $projeccts = array();
+    $projects[] = new Project("", "error connecting to database");
     if (!is_null($db_conn)) {
         $securityQuestion = getUserSecurityQuestion($db_conn, $_SESSION['userid']);
         $questions = getSecurityQuestions($db_conn);
+        $projects = getProjectsUserIsAMemberOf($db_conn, $_SESSION['userid']);
     }
     ?>
     <html>
@@ -29,173 +32,135 @@ if (isset($_SESSION['username'])) { ?>
     <body>
         <div class="container">
             <h2>Hi <?PHP echo "{$_SESSION['username']}.";?> Manage your account here!</h2>
-            <button class="btn btn-link" role="link" type="button" name="op" value="Link 1" data-toggle="modal" data-target="#ResetPasswordModal">Reset Password</button>
-            <button class="btn btn-link" role="link" type="button" name="op" value="Link 1" data-toggle="modal" data-target="#ChangePasswordModal">Change Password</button>
-            <button class="btn btn-link" role="link" type="button" name="op" value="Link 1" data-toggle="modal" data-target="#ChangeSecurityQuestionModal">Change Security Question</button>
-            <button class="btn btn-link" role="link" type="button" name="op" value="Link 1" id="deleteAccount" >Delete Account</button>
-        </div>
 
-                <!-- Modal for adding project -->
-        <div id="ResetPasswordModal" class="modal fade" role="dialog">
-          <div class="modal-dialog">
+            <ul class="nav nav-pills">
+                <li class="active"><a data-toggle="pill" href="#ResetPwdTab">Reset Password</a></li>
+                <li><a data-toggle="pill" href="#ChangePwdTab">Change Password</a></li>
+                <li><a data-toggle="pill" href="#ChangeSecurityQuestionTab">Change Security Question</a></li>
+                <li><a data-toggle="pill" href="#ResetPwdTab">Reset Password</a></li>
+                <?PHP
+                if (!empty($projects)) {
+                ?>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Manage Project<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <?PHP
+                            foreach ($projects as $project) { ?>
+                                <li><a href="#ManageProjectTab" data-toggle='pill'><?PHP echo $project->name; ?></a></li>
+                            <?PHP } ?>
+                        </ul>
+                    </li>
+                <?PHP } ?>
+                <li><a href="#" id="deleteAccount" >Delete Account</a><li>
+            </ul>
 
-            <!-- Modal content-->
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Reset Password</h4>
-              </div>
-              <div class="modal-body">
-                <form id="projectForm" method="post" class="form-horizontal">
-                    <div class="form-group">
-                        <label  class="col-sm-4 control-label" for="SecurityQuestion"><?PHP echo (is_null($securityQuestion)) ? "Please select a new question" : "SecurityQuestion:"; ?></label>
-                        <div class="col-sm-8">
-                        <?PHP 
-                        if (is_null($securityQuestion)) { ?>
-                            <select class='form-control-static' id='ResetPwdSecurityQuestionDropdown'>
-                                <option value="" selected disabled>Security Question</option>
-                                <?PHP 
-                                foreach($questions as $question) {
-                                    echo "<option value='{$question->id}'>{$question->question}</option>";
-                                }
-                                ?>
-                            </select>
-                            <a href="#" data-toggle="tooltip" title="<?PHP echo $securityQuestionMessage ?>"><span class="glyphicon glyphicon-question-sign"></span></a>
-                        <?PHP } else { ?>
-                            <p class="form-control-static"><?PHP echo $securityQuestion; ?></p>
-                        <?PHP } ?>
+            <div class="tab-content">
+                <div id="ResetPwdTab" class="tab-pane fade in active">
+                    <form id="projectForm" method="post" class="form-horizontal">
+                        <div class="form-group">
+                            <label for="SecurityQuestion"><?PHP echo (is_null($securityQuestion)) ? "Please select a new question" : "SecurityQuestion:"; ?></label>
+                            <div>
+                            <?PHP 
+                            if (is_null($securityQuestion)) { ?>
+                                <select class='form-control-static' id='ResetPwdSecurityQuestionDropdown'>
+                                    <option value="" selected disabled>Security Question</option>
+                                    <?PHP 
+                                    foreach($questions as $question) {
+                                        echo "<option value='{$question->id}'>{$question->question}</option>";
+                                    }
+                                    ?>
+                                </select>
+                                <a href="#" data-toggle="tooltip" title="<?PHP echo $securityQuestionMessage ?>"><span class="glyphicon glyphicon-question-sign"></span></a>
+                            <?PHP } else { ?>
+                                <p class="form-control-static"><?PHP echo $securityQuestion; ?></p>
+                            <?PHP } ?>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label  class="col-sm-4 control-label" for="password">Security Question Answer</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" id="resetPwdSecurityQuestionAnswer" placeholder="answer"/>
+                        <div class="form-group">
+                            <label for="password">Security Question Answer</label>
+                            <div >
+                                <input type="text" class="form-control" id="resetPwdSecurityQuestionAnswer" placeholder="answer"/>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label  class="col-sm-4 control-label" for="password">New Password</label>
-                        <div class="col-sm-8">
-                            <input type="password" class="form-control" id="resetPwdPwd" placeholder="password"/>
+                        <div class="form-group">
+                            <label for="password">New Password</label>
+                            <div >
+                                <input type="password" class="form-control" id="resetPwdPwd" placeholder="password"/>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label  class="col-sm-4 control-label" for="password">Confirm Password</label>
-                        <div class="col-sm-8">
-                            <input type="password" class="form-control" id="resetPwdPwdConf" placeholder="password"/>
+                        <div class="form-group">
+                            <label for="password">Confirm Password</label>
+                            <div>
+                                <input type="password" class="form-control" id="resetPwdPwdConf" placeholder="password"/>
+                            </div>
                         </div>
-                    </div>
-                    <p class="col-sm-4"></p>
-                    <p class="col-sm-8" id="resetPwdError"></p>
-                    <div class="form-group">
-                        <div class="col-xs-5 col-xs-offset-3">
+                        <div class="form-group">
                             <button type="button" class="btn btn-primary" id="ResetPwdSubmissionButton">Submit</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                         </div>
-                    </div>
-                </form>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" id="submit">Close</button>
-              </div>
-            </div>
+                    </form>
+                </div>
 
-          </div>
-        </div>
+                <div id="ChangePwdTab" class="tab-pane fade">
 
-                        <!-- Modal for changing password-->
-        <div id="ChangePasswordModal" class="modal fade" role="dialog">
-          <div class="modal-dialog">
+                    <form id="projectForm" method="post" class="form-horizontal">
+                        <div class="form-group">
+                            <label for="password">Current Password</label>
+                            <div >
+                                <input type="password" class="form-control" id="changePwdCurrentPwd" placeholder="current password"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">New Password</label>
+                            <div>
+                                <input type="password" class="form-control" id="changePwdPwd" placeholder="password"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Confirm Password</label>
+                            <div>
+                                <input type="password" class="form-control" id="changePwdPwdConf" placeholder="password"/>
+                            </div>
+                        </div>
+                        <p id="changePwdError"></p>
 
-            <!-- Modal content-->
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Change Password</h4>
-              </div>
-              <div class="modal-body">
-                <form id="projectForm" method="post" class="form-horizontal">
-                    <div class="form-group">
-                        <label  class="col-sm-4 control-label" for="password">Current Password</label>
-                        <div class="col-sm-8">
-                            <input type="password" class="form-control" id="changePwdCurrentPwd" placeholder="current password"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label  class="col-sm-4 control-label" for="password">New Password</label>
-                        <div class="col-sm-8">
-                            <input type="password" class="form-control" id="changePwdPwd" placeholder="password"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label  class="col-sm-4 control-label" for="password">Confirm Password</label>
-                        <div class="col-sm-8">
-                            <input type="password" class="form-control" id="changePwdPwdConf" placeholder="password"/>
-                        </div>
-                    </div>
-                    <p class="col-sm-4"></p>
-                    <p class="col-sm-8" id="changePwdError"></p>
-                    <div class="form-group">
-                        <div class="col-xs-5 col-xs-offset-3">
+                        <div class="form-group">
                             <button type="button" class="btn btn-primary" id="ChangePwdSubmissionButton">Submit</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                         </div>
-                    </div>
-                </form>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" id="submit">Close</button>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-                <div id="ChangeSecurityQuestionModal" class="modal fade" role="dialog">
-          <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Reset Password</h4>
-              </div>
-              <div class="modal-body">
-                <form id="projectForm" method="post" class="form-horizontal">
-                    <div class="form-group">
-                        <label  class="col-sm-4 control-label" for="SecurityQuestion"><?PHP echo (is_null($securityQuestion)) ? "Please select a new question" : "SecurityQuestion:"; ?></label>
-                        <div class="col-sm-8">
-                            <select class='form-control-static' id='newSecurityQuestionDropdown'>
-                                <option value="" selected disabled>Choose Security Question</option>
-                                <?PHP 
-                                foreach($questions as $question) {
-                                    echo "<option value='{$question->id}'>{$question->question}</option>";
-                                }
-                                ?>
-                            </select>
+                    </form>
+                </div>
+                <div id="ChangeSecurityQuestionTab" class="tab-pane fade">
+                    <form id="projectForm" method="post" class="form-horizontal">
+                        <div class="form-group">
+                            <label for="SecurityQuestion"><?PHP echo (is_null($securityQuestion)) ? "Please select a new question" : "SecurityQuestion:"; ?></label>
+                            <div>
+                                <select class='form-control-static' id='newSecurityQuestionDropdown'>
+                                    <option value="" selected disabled>Choose Security Question</option>
+                                    <?PHP 
+                                    foreach($questions as $question) {
+                                        echo "<option value='{$question->id}'>{$question->question}</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label  class="col-sm-4 control-label" for="securityQuestion">New Answer</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" id="newSecurityQuestionAnswer" placeholder="answer"/>
+                        <div class="form-group">
+                            <label for="securityQuestion">New Answer</label>
+                            <div >
+                                <input type="text" class="form-control" id="newSecurityQuestionAnswer" placeholder="answer"/>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-xs-5 col-xs-offset-3">
+                        <div class="form-group">
                             <button type="button" class="btn btn-primary" id="ChangeSecurityQuestionSubmissionButton">Submit</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                         </div>
-                    </div>
-                </form>
+                  </form>
               </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" id="submit">Close</button>
+
+              <div id='ManageProjectTab' class="tab-pane fade">
+
               </div>
+
             </div>
-
-          </div>
         </div>
-
         <script src="scripts/account.js"></script> <!--This must be here! There is a check to see if an ID exists that fails if it is executed before the id is read.-->
     </body>
 <?PHP } else {  
