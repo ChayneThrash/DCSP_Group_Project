@@ -9,9 +9,15 @@
 
 #comment {
     font-size: 11px;
+    resize: none;
     
 }
 
 #reply {
     font-size: 11px;
 }
+ 
+#cont{
+    text-align: center;
+}
+

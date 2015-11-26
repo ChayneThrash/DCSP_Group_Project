@@ -62,9 +62,26 @@ class Project {
 }
 
 class Comment {
+    var $commentid;
+	var $parent_contentid;
+	var $parent_commentid;
+    var $comment;
+    var $userID;
+	var $votes;
+	var $date_made;
+    var $removed;
+
+    public function __construct($commentid, $parent_contentid, $parent_commentid, $comment, $userID, $votes, $date_made, $removed){
+        $this->commentid=$commentid;
+        $this->parent_contentid=$parent_contentid;
+        $this->parent_commentid=$parent_commentid;
+        $this->comment=$comment;
+        $this->userID=$userID;
+        $this->votes=$votes;
+        $this->date_made=$date_made;
+        $this->removed=$removed;
+    }
 }
 
-class Reply {
-}
 
 ?>
