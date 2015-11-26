@@ -30,7 +30,7 @@ class Content {
 	var $content;
 	var $score;
 	var $userID;
-	var $langauge;
+	var $language;
 	var $projectID;
 	var $removed;
 	var $date_made;
@@ -41,7 +41,7 @@ class Content {
 		$this->content = $content;
 		$this->score = $score;
 		$this->userID = $userID;
-		$this->langauge = $language;
+		$this->language = $language;
 		$this->projectID = $projectID;
 		$this->removed = $removed;
 		$this->date_made = $date_made;

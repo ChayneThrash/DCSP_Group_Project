@@ -17,6 +17,7 @@ if (is_null($db_conn)) {
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<link href="lib/syntaxHighlighting/prism.css" rel="stylesheet" />
 <script src="scripts/content.js"></script>
 <title><?PHP echo "{$content->title}"; ?></title>
 
@@ -33,7 +34,7 @@ if (is_null($db_conn)) {
 	</div>
 	<div>
 	<?PHP
-	echo "<pre class='pre-scrollable'>{$content->content}</pre>";
+	echo "<pre><code class='language-{$content->language}'>{$content->content}</code></pre>";
 	?>
 	</div>
 	<div>
@@ -53,14 +54,10 @@ if (is_null($db_conn)) {
         <div class="row">
             <div class="col-sm-4"></div>
             <div class="col-sm-8">
+        </div>
+	    
+        </div>
 
-	    <?PHP
-        echo "<p "
-        ?>
-
-	</div>
-
-</div>
-
+<script src="lib/syntaxHighlighting/prism.js"></script>
 </body>
 </html>
