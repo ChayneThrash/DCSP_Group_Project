@@ -91,6 +91,30 @@ function getContent($connected_db, $id_num){
 	return $content_entry;
 }
 
+
+function getComments($connected_db, $id_num){
+    $query = "select * from Comment where ParentContentId = $id_num and ParentCommentId=NULL";
+	$result = $connected_db->query($query);
+	$comments=array();
+	while($row = $result->fetch_assoc()){
+		$comment_entry = new Comment($row['CommentId'], $row['ParentContentId'], $row['ParentCommentId'], $row['Comment'], $row['UserId'], $row['Votes'], $row['DateMade'], $row['Removed']);
+		$comments[] = $comment_entry;
+	}
+	return $comments;
+	
+}
+
+function child_comments($connected_db, $id_num){
+    $query = "select * from Comment where ParentCommentId = $id_num";
+	$result = $connected_db->query($query);
+	$comments=array();
+	while($row = $result->fetch_assoc()){
+		$comment_entry = new Comment($row['CommentId'], $row['ParentContentId'], $row['ParentCommentId'], $row['Comment'], $row['UserId'], $row['Votes'], $row['DateMade'], $row['Removed']);
+		$comments[] = $comment_entry;
+	}
+	return $comments;
+}
+
 function getProjects($connected_db, $userId = null) {
     $query = "";
     if (is_null($userId)) {
@@ -136,6 +160,10 @@ function addContent($connected_db, $userId, $title, $content, $projectId, $langu
     $query = "insert into Content(UserId, Title, Content, ProjectId, Language, DateMade) Values({$userId}, '$title', '$content', {$projectId}, {$language}, NOW())";
     $result = $connected_db->query($query);
 	return $result;
+}
+
+function addComment($connected_db, $userId, $comment,  ){
+    $query = "insert into Comment(UserId)"
 }
 
 function projectExists($connected_db, $projectName) {

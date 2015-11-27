@@ -1,19 +1,22 @@
 var commentValid = false;
 
 $(document).ready(function () {
+    $('#comment').autoGrow();
 
-    $('textarea').hide();
-    $("textarea").on("click", comment);
+   
 });
 
+
 function comment() {
-    $('textarea').toggle();
+    if (validateComment()) {
+        addComment();
+    }
 }
 
 function validateComment() {
     var comment = $("#comment").val();
-    commentValid = (comment.length !== 0);
-    changeButtonStatus();
+    commentValid = (comment.length != 0);
+    return commentValid;
 }
 
 function addComment() {
@@ -22,9 +25,17 @@ function addComment() {
         url: "ajax/addComment.php",
         data:
             {
-                title: $("#title").val(), comment: $("#comment").val(),
-                projectId: $("#ProjectDropdown").val(), language: $("#LanguageDropdown").val()
+                comment: $("#comment").val(),
             },
-        success: processContentSubmissionResponse
+        success: processCommentSubmissionResponse
     });
+}
+
+function processCommentSubmissionResponse(response) {
+    if (response === "success") {
+        window.location.reload();
+    } else {
+        $("#submissionErrorMsg").text(response);
+        $("#commentSubmissionErrorModal").modal("show");
+    }
 }
