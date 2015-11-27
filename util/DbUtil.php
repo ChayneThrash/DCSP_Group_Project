@@ -93,7 +93,7 @@ function getContent($connected_db, $id_num){
 
 
 function getComments($connected_db, $id_num){
-    $query = "select * from Comment where ParentContentId = $id_num and ParentCommentId=NULL";
+    $query = "select * from Comment where ParentContentId = $id_num and ParentCommentId=NULL order by Votes";
 	$result = $connected_db->query($query);
 	$comments=array();
 	while($row = $result->fetch_assoc()){
@@ -105,7 +105,7 @@ function getComments($connected_db, $id_num){
 }
 
 function child_comments($connected_db, $id_num){
-    $query = "select * from Comment where ParentCommentId = $id_num";
+    $query = "select * from Comment where ParentCommentId = $id_num order by Votes";
 	$result = $connected_db->query($query);
 	$comments=array();
 	while($row = $result->fetch_assoc()){
@@ -162,9 +162,10 @@ function addContent($connected_db, $userId, $title, $content, $projectId, $langu
 	return $result;
 }
 
-function addComment($connected_db, $userId, $comment,  ){
+/*function addComment($connected_db, $userId, $comment,  ){
     $query = "insert into Comment(UserId)"
 }
+*/
 
 function projectExists($connected_db, $projectName) {
     $query = "select * from Project where ProjectName = '$projectName'";

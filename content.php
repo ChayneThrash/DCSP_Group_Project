@@ -46,7 +46,7 @@ if (is_null($db_conn)) {
         
         <div class='col-xs-1'>
    
-        <div class="btn-group-vertical">
+        <div class="btn-group-vertical btn-group-sm">
         <button type='button' class='btn btn-default' onclick='upvote()'>
 	        <span class='glyphicon glyphicon-chevron-up'></span>
 	    </button>
@@ -61,7 +61,7 @@ if (is_null($db_conn)) {
 
         <div class="col-xs-11">
 	    <?PHP
-	    echo "<pre class='pre-scrollable'><code class='language-{$content->language}'>{$content->content}</code></pre>";
+	    echo "<pre class='pre-scrollable' style='position: fixed;'><code class='language-{$content->language}'>{$content->content}</code></pre>";
 	    ?>
 	    </div>
     </div> 
@@ -75,14 +75,18 @@ if (is_null($db_conn)) {
         $childcomments=array();
         $childcomments=child_comments($db_conn, $comment->CommentId);
          echo
-            "<div class='row>
-                <div class='col-xs-4 col-xs-offset-4'>
+            "<div class='well'>
+            <div class='row'>
+                <div class='col-xs-10 col-xs-offset-2'>
                 <pre class='pre-scrollable'>{$comment->comment}</pre>
 			    </div>
             </div>";
             foreach($child_comments as $comment){
                 echo
-                "<div class='row'>......</div>";
+                "<div class='row'>
+                    <div class='col-xs-8 col-xs-offset-4'>
+                    <pre class='pre-scrollable'>{$comment->comment}</pre>
+                    </div>";
          }
     }
 ?>

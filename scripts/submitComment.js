@@ -10,6 +10,7 @@ $(document).ready(function () {
 function comment() {
     if (validateComment()) {
         addComment();
+        $('#comment').val() = '';
     }
 }
 
