@@ -31,6 +31,13 @@ $(document).ready(function () {
     $("#newSecurityQuestionDropdown").change(validateChangeSecurityQuestion);
     $("#ChangeSecurityQuestionSubmissionButton").prop("disabled", true);
     $("#ChangeSecurityQuestionSubmissionButton").on("click", changeSecurityQuestion);
+
+    $('#ManageProjectList li a').on('click', function() {
+        $("#ProjectNameHeading").text($(this).html());
+        $("#members").empty();
+        $("#owners").empty();
+        getMembers($(this).html());
+    });
 });
 
 function resetPwdNeedsNewSecurityQuestion() {
@@ -199,5 +206,31 @@ function processChangeSecurityQuestionResponse(response) {
         window.location.href = "index.php";
     } else {
         alert(response);
+    }
+}
+
+function getMembers(project_name) {
+    $.ajax({
+        method: "POST",
+        url: "ajax/getProjectMembers.php",
+        data:
+            {
+                projectName: project_name
+            },
+        success: processChangeSecurityQuestionResponse
+    });
+}
+
+function processChangeSecurityQuestionResponse(response) {
+    var responseObj = jQuery.parseJSON(response);
+    if (responseObj.status === "success") {
+        $.each(responseObj.members, function (i, item) {
+            $('#members').append($("<option></option>").text(item));
+        });
+        $.each(responseObj.owners, function (i, item) {
+            $('#owners').append($("<option></option>").text(item));
+        });
+    } else {
+        alert(responseObj.status);
     }
 }

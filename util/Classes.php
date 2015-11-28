@@ -61,6 +61,16 @@ class Project {
 
 }
 
+class ProjectMember {
+    var $userName;
+    var $isAdmin;
+
+    public function __construct($userName, $isAdmin) {
+        $this->userName = $userName;
+        $this->isAdmin = $isAdmin;
+    }
+}
+
 class Comment {
     var $commentid;
 	var $parent_contentid;

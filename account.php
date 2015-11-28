@@ -43,10 +43,10 @@ if (isset($_SESSION['username'])) { ?>
                 ?>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Manage Project<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu" id='ManageProjectList'>
                             <?PHP
                             foreach ($projects as $project) { ?>
-                                <li><a href="#ManageProjectTab" data-toggle='pill'><?PHP echo $project->name; ?></a></li>
+                                <li><a data-private=<?PHP echo ($project->isPrivate) ? "'1'" : "'0'"; ?> href="#ManageProjectTab" data-toggle='pill'><?PHP echo $project->name; ?></a></li>
                             <?PHP } ?>
                         </ul>
                     </li>
@@ -156,7 +156,28 @@ if (isset($_SESSION['username'])) { ?>
               </div>
 
               <div id='ManageProjectTab' class="tab-pane fade">
-
+                <div class="panel panel-info">
+                  <div class='panel-heading' id='ProjectNameHeading'></div>
+                  <div class='panel-body'>
+                      <div class='row'>
+                          <div class='col-sm-4'>
+                              <label for="members">Members</label>
+                              <select multiple class='form-control' id="members">
+                                  
+                              </select>
+                          </div>
+                          <div class='col-sm-4'>
+                              <label for="owners">Owners</label>
+                              <select multiple class='form-control' id="owners">
+                                  <option value='elem_1'>elem 1</option>
+                                  <option value='elem_2'>elem 2</option>
+                                  <option value='elem_3'>elem 3</option>
+                                  <option value='elem_4'>elem 4</option>
+                              </select>
+                          </div>
+                      </div>
+                  </div>
+                </div>
               </div>
 
             </div>

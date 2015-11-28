@@ -265,4 +265,20 @@ function getProjectsUserIsAMemberOf($connected_db, $userId) {
     return $projects;
 }
 
+function userIsMemberOfProject($connected_db, $projectName, $userId) {
+    $query = "select pm.UserId from ProjectMembers pm left join Project p on pm.ProjectId = p.ProjectId where p.ProjectName = '$projectName' and pm.UserId = {$userId}";
+    $result = $connected_db->query($query);
+    return ($result->fetch_assoc()) ? true : false;
+}
+
+function getMembersOfProject($connected_db, $projectName) {
+    $query = "select u.UserName, pm.Admin from User u inner join ProjectMembers pm on u.UserId = pm.UserId Inner Join Project p on p.ProjectId = pm.ProjectId where p.ProjectName = '$projectName'";
+    $result = $connected_db->query($query);
+    $members = array();
+    while ($row = $result->fetch_assoc()) {
+        $members[] = new ProjectMember($row['UserName'], ($row['Admin']) ? true : false);
+    }
+    return $members;
+}
+
 ?>
