@@ -9,6 +9,7 @@
 
 #content {
 	font-size: 14px;
+    resize:vertical;
 }
 
 #comment {

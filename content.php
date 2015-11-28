@@ -19,6 +19,7 @@ if (is_null($db_conn)) {
 <head>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--<meta content="text/html; charset=utf-8" http-equiv="Content-Type">-->
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link rel="stylesheet" href="stylesheets/content.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -31,7 +32,7 @@ if (is_null($db_conn)) {
 
 </head>
 <body>
-
+<div class='container-fluid'>
 <div class="panel panel-default">
 	<div class='panel-heading'><h1>Code Cleanup!</h1></div>
     <div class='panel-body'>
@@ -44,9 +45,10 @@ if (is_null($db_conn)) {
 	?>
 
 	</div>
-	<div class="row-fluid">
+    
+	<div class="row">
         
-        <div class='col-xs-1'>
+        <div class='col-xm-1 col-md-1'>
    
         <div class="btn-group-vertical btn-group-sm">
         <button type='button' class='btn btn-default' onclick='upvote()'>
@@ -61,14 +63,15 @@ if (is_null($db_conn)) {
         </div>
         </div>
 
-        <div class="col-xs-11">
+        <div class="col-xm-11 col-md-11">
 	    <?PHP
-	    echo "<pre class='pre-scrollable' style='position: fixed;'><code class='language-{$content->language}'>{$content->content}</code></pre>";
+	    echo "<pre class='pre-scrollable'><code class='language-{$content->language}'>{$content->content}</code></pre>";
 	    ?>
 	    </div>
     </div> 
 	</div>
     </div>
+ 
      <textarea class='form-control noresize' id='comment' rows='3' placeholder='Comment'></textarea>
      <button type='button' style="float: right;" class='btn btn-primary' onclick='comment()'>Comment</button>
      <?php
@@ -114,5 +117,6 @@ if (is_null($db_conn)) {
         </div>
 <script src="lib/syntaxHighlighting/prism.js"></script>
 <div style="clear: both;"></div>
+</div>
 </body>
 </html>
