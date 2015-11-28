@@ -45,6 +45,13 @@ function getUser($connected_db, $user) {
     }
 }
 
+function getUserbyid($connected_db, $userid){
+    $query = "select Username from User where UserId = '$userid'";
+    $result = $connected_db->query($query);
+    $row = $result->fetch_assoc();
+    return ($row['Username']);
+}
+
 function checkIfAdmin($connected_db, $username) {
 	$query = "select Admin from User where Username = '$username'";
 	$result = $connected_db->query($query);
@@ -162,10 +169,12 @@ function addContent($connected_db, $userId, $title, $content, $projectId, $langu
 	return $result;
 }
 
-/*function addComment($connected_db, $userId, $comment,  ){
-    $query = "insert into Comment(UserId)"
+function addComment($connected_db, $userId, $comment, $contentid, $parentcommentid){
+    $query = "insert into Comment(UserId, Comment, ParentContentId, DateMade) Values({$userId},'$comment', {$contentid}, NOW())";
+    $result = $connected_db->query($query);
+    return $result;
 }
-*/
+
 
 function projectExists($connected_db, $projectName) {
     $query = "select * from Project where ProjectName = '$projectName'";

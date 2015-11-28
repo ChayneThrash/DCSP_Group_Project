@@ -12,6 +12,7 @@ if (is_null($db_conn)) {
 } else {
 	$content = getContent($db_conn, $_GET["id"]);
     $comments = getComments($db_conn, $_GET["id"]);
+    $user =getUserbyid($db_conn, $content->userID);
 }
 ?>
 
@@ -25,7 +26,7 @@ if (is_null($db_conn)) {
 <link href="lib/syntaxHighlighting/prism.css" rel="stylesheet" />
 <script src="scripts/content.js"></script>
 <script src="scripts/submitComment.js"></script>
-
+<script src="scripts/jquery.autogrowtextarea.js"></script>
 <title><?PHP echo "{$content->title}"; ?></title>
 
 </head>
@@ -37,8 +38,9 @@ if (is_null($db_conn)) {
 	<div id='title'>
 
 	<?PHP
-	echo "<p class='lead'>{$content->title}</p>";
-	echo "<p id='contentid'>Content ID: {$content->id}</p>";
+	echo "<p class='lead'><b>{$content->title}</b></p>";
+	echo "<span>Submitted by: {$user}</span> <br></br>";
+    echo "<span id='contentid'> {$content->id}</span>";
 	?>
 
 	</div>
@@ -67,8 +69,8 @@ if (is_null($db_conn)) {
     </div> 
 	</div>
     </div>
-     <textarea class='form-control noresize' id='comment' rows='2' placeholder='Comment'></textarea>
-     <button type='button' onclick='comment()' style="float: right;" class='btn btn-primary'>Comment</button>
+     <textarea class='form-control noresize' id='comment' rows='3' placeholder='Comment'></textarea>
+     <button type='button' style="float: right;" class='btn btn-primary' onclick='comment()'>Comment</button>
      <?php
      
      foreach($comments as $comment){
@@ -78,7 +80,7 @@ if (is_null($db_conn)) {
             "<div class='well'>
             <div class='row'>
                 <div class='col-xs-10 col-xs-offset-2'>
-                <pre class='pre-scrollable'>{$comment->comment}</pre>
+                <pre id='parent' class='pre-scrollable'>{$comment->comment}</pre>
 			    </div>
             </div>";
             foreach($child_comments as $comment){

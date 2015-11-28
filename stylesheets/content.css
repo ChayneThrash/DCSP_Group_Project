@@ -1,6 +1,10 @@
 
 #title {
-	font-size: 30px;
+	font-size: 16px;
+}
+
+.lead{
+    font-size: 20px;
 }
 
 #content {
@@ -9,8 +13,7 @@
 
 #comment {
     font-size: 11px;
-    resize: none;
-    
+    resize: vertical;    
 }
 
 #reply {
