@@ -13,6 +13,8 @@ var ownerListSelected = false;
 
 var userToAddFormNotEmpty = false;
 
+var projectSelected = "";
+
 $(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
     $("#resetPwdPwd").on("input propertychange paste", resetPwdValidatePwd);
@@ -56,6 +58,7 @@ $(document).ready(function () {
         $("#members").empty();
         $("#owners").empty();
         getMembers($(this).html());
+        projectSelected = $(this).html();
     });
 
     $(".memberSelectButton").prop('disabled', true);
@@ -313,12 +316,15 @@ function addUserToProject() {
         url: "ajax/addUserToProject.php",
         data:
             {
-                projectName: $('#ManageProjectList li a').html(), username: $('#userToAddToProject').val(), isOwner: document.getElementById('ownerCheckbox').checked
+                projectName: projectSelected, username: $('#userToAddToProject').val(), isOwner: document.getElementById('ownerCheckbox').checked
             },
         success: processAddUserToProjectResponse
     });
 }
 
 function processAddUserToProjectResponse(response) {
-    alert(response);
+    if (response !== "success") {
+        alert(response);
+    }
+    window.location.href = "account.php";
 }

@@ -17,8 +17,7 @@ if (!isset($_SESSION['userid'])) {
 } elseif (is_null($db_conn)) {
     $response = "Error connecting to the database. Please try again later.";
 } elseif(!isUserProjectAdmin($db_conn, $projectName, $_SESSION['userid'])) {
-    //$response = "You must be a project owner to access this feature.";
-    $response = (isUserProjectAdmin($db_conn, $projectName, $_SESSION['userid'])) ? $projectName : $projectName;
+    $response = "You must be a project owner to access this feature.";
 } elseif(userAlreadyMemberOfProject($db_conn, $projectName, $usernameToAdd)) {
     $response = "User is already of a member of the project";
 } elseif(!addProjectMember($db_conn, $projectName, $usernameToAdd)) {

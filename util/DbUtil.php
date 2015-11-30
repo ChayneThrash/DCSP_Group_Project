@@ -298,9 +298,9 @@ function getMembersOfProject($connected_db, $projectName) {
 }
 
 function userAlreadyMemberOfProject($connected_db, $projectName, $usernameToAdd) {
-    $query = "select * from ProjectMembers pm left join Project on pm.ProjectId = p.ProjectId left join User u on pm.UserId = u.UserId where p.ProjectName = '$projectName' and u.UserName = '$usernameToAdd'";
+    $query = "select * from ProjectMembers pm left join Project p on pm.ProjectId = p.ProjectId left join User u on pm.UserId = u.UserId where p.ProjectName = '$projectName' and u.UserName = '$usernameToAdd'";
     $result = $connected_db->query($query);
-    return ($result);
+    return ($result->fetch_assoc()) ? true : false;
 }
 
 function addProjectMember($connected_db, $projectName, $usernameToAdd, $isOwner) {
