@@ -23,6 +23,7 @@ if (is_null($db_conn)) {
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="stylesheets/index.css">
 <script src="scripts/index.js"></script>
+<script src="scripts/content.js"></script>
 <title>Code Cleanup main page</title>
 </head>
 
@@ -49,7 +50,7 @@ if (is_null($db_conn)) {
         <div class='panel-body'>
             <div class='row'>
 		        <div class='col-sm-1 text-left'>
-		        <button type='button' onclick='upvote()'>
+		        <button type='button' onclick='vote(0)'>
 				<span class='glyphicon glyphicon-chevron-up'></span>
 				</button>
 		        </div>
@@ -59,18 +60,18 @@ if (is_null($db_conn)) {
 	        </div>
 	        <div class='row'>
 		        <div class='col-sm-1 text-left'>
-		        <button type='button' onclick='downvote()'>
+		        <button type='button' onclick='vote(1)'>
 				<span class='glyphicon glyphicon-chevron-down'></span>
 				</button>
 		        </div>
 		        <div class='col-sm-2 text-left'>
 		        <nobr>Current Score: {$content[$entry]->score}</nobr>
 		        </div>
-		        <div class='col-sm-2 text-left'>
+		        <div class='col-sm-4 text-left'>
 		        <nobr>Date Made: {$content[$entry]->date_made}</nobr>
 		        </div>
-		        <div class='col-sm-7 text-left'>
-		        <nobr>{$content[$entry]->language}</nobr>
+		        <div class='col-sm-5 text-left'>
+		        <nobr>Language: {$content[$entry]->language}</nobr>
 		        </div>
 	        </div>
         </div>

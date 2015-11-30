@@ -237,14 +237,14 @@ function checkUserVote($connected_db, $userId, $contentId){
 	return $row['VoteType'];
 }
 
-function addContentScore($connected_db, $contentId){
-	$query = "Update Content Set Score= (Score + 1) Where ContentId = {$contentId}";
+function modContentScore($connected_db, $contentId, $num){
+	$query = "Update Content Set Score= (Score + {$num}) Where ContentId = {$contentId}";
 	$result = $connected_db->query($query);
 	return $result;
 }
 
-function upvoteContentVoting($connected_db, $userId, $contentId){
-	$query = "Update ContentVoting Set VoteType = 'u' Where ContentId = {$contentId} and UserId = {$userId}";
+function contentVoting($connected_db, $userId, $contentId, $type){
+	$query = "Update ContentVoting Set VoteType = '{$type}' Where ContentId = {$contentId} and UserId = {$userId}";
 	$result = $connected_db->query($query);
 	return $result;
 }
@@ -256,8 +256,8 @@ function getContentScore($connected_db, $contentId){
 	return $row['Score'];
 }
 
-function insertContentVotingUp($connected_db, $userId, $contentId){
-	$query = "Insert Into ContentVoting (ContentId, UserId, VoteType) values ({$contentId}, {$userId}, 'u')";
+function insertContentVoting($connected_db, $userId, $contentId, $type){
+	$query = "Insert Into ContentVoting (ContentId, UserId, VoteType) values ({$contentId}, {$userId}, '{$type}')";
 	$result = $connected_db->query($query);
 	return $result;
 }

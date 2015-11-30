@@ -58,7 +58,6 @@ if (is_null($db_conn)) {
 	<?PHP
 	echo "<p class='lead'><b>{$content->title}</b></p>";
 	echo "<span>Submitted by: {$user}</span> <br></br>";
-    echo "<span id='contentid'> {$content->id}</span>";
 	?>
 
 	</div>
@@ -68,13 +67,14 @@ if (is_null($db_conn)) {
         <div class='col-xm-1 col-md-1'>
          
         <div class="btn-group-vertical btn-group-sm">
-        <button type='button' class='btn btn-default' onclick='upvote()'>
+		<!-- The 1 in the vote() function is downvote and 0 is upvote -->
+        <button type='button' class='btn btn-default' onclick='vote(0)'>
 	        <span class='glyphicon glyphicon-chevron-up'></span>
 	    </button>
         <?php
-        echo "<span id='score'>{$content->score}</span>";
+        echo "<span id='score'>Score: {$content->score}</span>";
         ?>
-        <button type='button' class='btn btn-default' onclick='downvote()'>
+        <button type='button' class='btn btn-default' onclick='vote(1)'>
 	        <span class='glyphicon glyphicon-chevron-down'></span>
 	    </button>
         </div>

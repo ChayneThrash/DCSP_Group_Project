@@ -1,24 +1,24 @@
-function upvote() {
+function vote(vote) {
 	$.ajax({
 		type: "POST",
-		url: "ajax/upvote.php",
-		data: {contentid: content_id},
+		url: "ajax/vote.php",
+		data: {contentid: content_id, vote: vote},
 		success: updateVote
 		});
 }
 
-function downvote(){
-	$("#score").html("2");
-}
 
 function updateVote(output){
 	if(output === "noUser"){
 		window.alert("You must be logged in to vote.");
 	}
 	else if(output === "up"){
-		window.alert("You cannot upvote twice on one submission.")
+		window.alert("You cannot upvote twice on one submission.");
+	}
+	else if(output === "down"){
+		window.alert("You cannot downvote twice on one submission.");
 	}
 	else{
-		$("#score").html(output);
+		$("#score").html("Score: " + output);
 	}
 }
