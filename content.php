@@ -4,7 +4,7 @@
 session_start(); 
 include "util/DbUtil.php";
 $db_conn = getConnectedDb();
-$comment=new Comment(null,null,null,null,null,null,null,null);
+
 $comments=array();
 if (is_null($db_conn)) {
 	$errorMsg = new Content(null,"No database found.",null,null,null,null,null,null,null);
@@ -39,7 +39,19 @@ if (is_null($db_conn)) {
 <body>
 <div class='container-fluid'>
 <div class="panel panel-default">
-	<div class='panel-heading'><h1>Code Cleanup!</h1></div>
+	<div class='panel-heading'><h1>Code Cleanup!</h1>
+        <div id='userInfo'>
+        <?PHP
+        if (isset($_SESSION['username'])) {
+            echo "<a id='account' href='account.php'>{$_SESSION['username']}</a>";
+            echo "<button id='logout' class='btn btn-link' role='link' type='button' name='op' value='Link 1'>Logout</button>";
+        } else {
+            echo "<a id='login' href='login.php'>Login</a>";
+            echo "<a id='register' href='registration.php'>No account? Register!</a>";
+        }
+        ?>
+    </div>
+    </div>
     <div class='panel-body'>
 	<div id='title'>
 
@@ -77,20 +89,25 @@ if (is_null($db_conn)) {
 	</div>
     </div>
 
-    <div>
+    <div class='row'>
      <textarea class='form-control noresize' id='comment' rows='3' placeholder='Comment'></textarea>
      <button type='button' style="float: right" class='btn btn-primary' onclick='parentcomment()'>Comment</button>
     </div>
      <?php
      
      foreach($comments as $comment){
-        $childcomments=array();
-        $childcomments=child_comments($db_conn, $comment->CommentId);
+        //$childcomments=array();
+        //$childcomments=child_comments($db_conn, $comment->CommentId);
+        $user=getUserbyid($db_conn,$comment->userID);
          echo
-            "<div class='well'>
+            
+            "
             <div class='row'>
-                <div class='col-xs-10 col-xs-offset-2'>
-                <pre id='parent' class='pre-scrollable'>{$comment->comment}</pre>
+                <div class='col-xs-2 col-md-2'>
+                </div>
+                <div class='col-xs-10 col-md-10 panel panel-default'>
+                    <span>Submitted by: {$user}</span>
+                    <pre id='parent' class='pre-scrollable'>{$comment->comment}</pre>
 			    </div>
             </div>";
             foreach($child_comments as $comment){

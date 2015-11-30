@@ -7,7 +7,6 @@ $(document).ready(function () {
 
 function parentcomment() {
     if (validateComment()) { 
-        window.alert("if statement executed");
         addParentComment();
         $('#comment').clear();
     } else {
@@ -17,7 +16,6 @@ function parentcomment() {
 
 function childcomment() {
     if (validateComment()) {
-        window.alert("if statement executed");
         addChildComment();
         $('#childcomment').clear();
     } else {
@@ -56,7 +54,6 @@ function addParentComment() {
 function processCommentSubmissionResponse(response) {
     if (response === "success") {
         window.location.reload();
-        window.alert("Comment successfully added");
     } else {
         $("#submissionErrorMsg").text(response);
         $("#commentSubmissionErrorModal").modal("show");

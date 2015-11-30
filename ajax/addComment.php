@@ -19,7 +19,9 @@ if (strlen($comment) === 0) {
     $response = "Invalid content";
 } elseif($contentid === "" || $contentid ==0){
     $response = "No content detected";
-}
+}elseif(is_null($_SESSION['userid'])){
+    $response = "Must be logged in to comment.";
+    }
 else {
 	$db_conn = getConnectedDb();
 	if (is_null($db_conn)) {

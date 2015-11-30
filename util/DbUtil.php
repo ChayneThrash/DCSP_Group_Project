@@ -100,7 +100,7 @@ function getContent($connected_db, $id_num){
 
 
 function getComments($connected_db, $id_num){
-    $query = "select * from Comment where ParentContentId = $id_num and ParentCommentId=NULL order by Votes";
+    $query = "select * from Comment where ParentContentId = $id_num and ParentCommentId is NULL order by Votes";
 	$result = $connected_db->query($query);
 	$comments=array();
 	while($row = $result->fetch_assoc()){
