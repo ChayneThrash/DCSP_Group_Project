@@ -15,6 +15,7 @@ if (!isset($_SESSION['userid'])) {
 } elseif (!userIsMemberOfProject($db_conn, $projectName, $_SESSION['userid'])) {
     $response = sprintf($formattableResponse, "Error, you do not have appropriate access to this project.", "[]", "[]");
 } else {
+    $isUserProjectAdmin = isUserProjectAdmin($db_conn, $projectName, $_SESSION['userid']);
     $memberJArray = array();
     $ownerJArray = array();
     $projectMembers = getMembersOfProject($db_conn, $projectName);
@@ -32,7 +33,7 @@ if (!isset($_SESSION['userid'])) {
         }
     }
 
-    $response = json_encode(array("status" => "success", "members" => $memberJArray, "owners" => $ownerJArray));
+    $response = json_encode(array("status" => "success", "members" => $memberJArray, "owners" => $ownerJArray, "isUserAdmin" => $isUserProjectAdmin, "username" => $_SESSION['username']));
 }
 
 echo $response;

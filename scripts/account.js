@@ -8,6 +8,11 @@ var changePwdValidator = new NewPasswordValidator("#changePwdPwd", "#changePwdPw
 var changeSecurityQuestionSelected = false;
 var changeSecurityQuestionAnswerValid = false;
 
+var memberListSelected = false;
+var ownerListSelected = false;
+
+var userToAddFormNotEmpty = false;
+
 $(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
     $("#resetPwdPwd").on("input propertychange paste", resetPwdValidatePwd);
@@ -33,11 +38,46 @@ $(document).ready(function () {
     $("#ChangeSecurityQuestionSubmissionButton").on("click", changeSecurityQuestion);
 
     $('#ManageProjectList li a').on('click', function() {
-        $("#ProjectNameHeading").text($(this).html());
+        $("#ProjectNameHeading").text("Project: " + $(this).html());
+        $("#membersColumn").removeClass();
+        $("#ownersColumn").removeClass();
+        if ($(this).attr("data-private") === "0") {
+            $("#makePublicButton").hide();
+            $("#makePrivateButton").show();
+            $("#membersColumn").hide();
+            $("#ownersColumn").addClass("col-sm-8");
+        } else {
+            $("#makePrivateButton").hide();
+            $("#makePublicButton").show();
+            $("#membersColumn").show();
+            $("#membersColumn").addClass("col-sm-6");
+            $("#ownersColumn").addClass("col-sm-6");
+        }
         $("#members").empty();
         $("#owners").empty();
         getMembers($(this).html());
     });
+
+    $(".memberSelectButton").prop('disabled', true);
+    $(".ownerSelectButton").prop('disabled', true);
+
+    $("#addUserToProjectButton").on('click', function () {
+        $("#addUserToProjectModal").modal('show');
+        $("#ownerCheckbox").prop('checked', false);
+    });
+
+    $("#addOwnerToProjectButton").on('click', function () {
+        $("#addUserToProjectModal").modal('show');
+        $("#ownerCheckbox").prop('checked', true);
+    });
+
+    $("#userToAddToProject").on("input propertychange paste", validateNewProjectMemberUsername);
+    $("#addUserToProjectSubmissionButton").on('click', addUserToProject);
+
+    $("#members").on('change', validateMembersSelect);
+    $("#owners").on('change', validateOwnersSelect);
+
+    $('[data-toggle="tooltip"]').tooltip();
 });
 
 function resetPwdNeedsNewSecurityQuestion() {
@@ -223,14 +263,62 @@ function getMembers(project_name) {
 
 function processChangeSecurityQuestionResponse(response) {
     var responseObj = jQuery.parseJSON(response);
+    $(".projectOwnerButtons").hide();
     if (responseObj.status === "success") {
         $.each(responseObj.members, function (i, item) {
-            $('#members').append($("<option></option>").text(item));
+            $('#members').append($("<option></option>").attr("disabled", (item === responseObj.username)).text(item));
+
         });
         $.each(responseObj.owners, function (i, item) {
-            $('#owners').append($("<option></option>").text(item));
+            $('#owners').append($("<option></option>").attr("disabled", (item === responseObj.username)).text(item));
         });
+        if (responseObj.isUserAdmin === true) {
+            $(".projectOwnerButtons").show();
+        }
     } else {
         alert(responseObj.status);
     }
+}
+
+function validateMembersSelect() {
+    memberListSelected = ($("#members option:selected").length > 0);
+    changeMemberButtonsStats();
+}
+
+function validateOwnersSelect() {
+    ownerListSelected = ($("#owners option:selected").length > 0);
+    changeOwnerButtonsStatus();
+}
+
+function changeMemberButtonsStats() {
+    $(".memberSelectButton").prop('disabled', !memberListSelected);
+}
+
+function changeOwnerButtonsStatus() {
+    $(".ownerSelectButton").prop('disabled', !ownerListSelected);
+}
+
+function validateNewProjectMemberUsername() {
+    userToAddFormNotEmpty = ($("#userToAddToProject").val().length != 0);
+    changeAddUserToProjectButtonStatus();
+}
+
+function changeAddUserToProjectButtonStatus() {
+    $("#addUserToProjectSubmissionButton").prop('disabled', !userToAddFormNotEmpty);
+}
+
+function addUserToProject() {
+    $.ajax({
+        method: "POST",
+        url: "ajax/addUserToProject.php",
+        data:
+            {
+                projectName: $('#ManageProjectList li a').html(), username: $('#userToAddToProject').val(), isOwner: document.getElementById('ownerCheckbox').checked
+            },
+        success: processAddUserToProjectResponse
+    });
+}
+
+function processAddUserToProjectResponse(response) {
+    alert(response);
 }

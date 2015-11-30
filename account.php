@@ -26,7 +26,7 @@ if (isset($_SESSION['username'])) { ?>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="scripts/NewPasswordValidator.js"></script>
     <link rel="stylesheet" href="stylesheets/account.css">
-    <title>Code Cleanup main page</title>
+    <title>Code Cleanup Account</title>
     </head>
 
     <body>
@@ -37,7 +37,6 @@ if (isset($_SESSION['username'])) { ?>
                 <li class="active"><a data-toggle="pill" href="#ResetPwdTab">Reset Password</a></li>
                 <li><a data-toggle="pill" href="#ChangePwdTab">Change Password</a></li>
                 <li><a data-toggle="pill" href="#ChangeSecurityQuestionTab">Change Security Question</a></li>
-                <li><a data-toggle="pill" href="#ResetPwdTab">Reset Password</a></li>
                 <?PHP
                 if (!empty($projects)) {
                 ?>
@@ -160,20 +159,37 @@ if (isset($_SESSION['username'])) { ?>
                   <div class='panel-heading' id='ProjectNameHeading'></div>
                   <div class='panel-body'>
                       <div class='row'>
-                          <div class='col-sm-4'>
+                          <div class='col-sm-4' id='membersColumn'>
                               <label for="members">Members</label>
                               <select multiple class='form-control' id="members">
-                                  
                               </select>
+                              <button id='addUserToProjectButton' title="Add user to project" data-toggle="tooltip" type="button" class="btn btn-default projectOwnerButtons">
+                                  <span class="glyphicon glyphicon-plus"></span> 
+                              </button>
+                              <button id='removeUserfromProjectButton' title="Remove user from project" data-toggle="tooltip" type="button" class="btn btn-default projectOwnerButtons memberSelectButton">
+                                  <span class="glyphicon glyphicon-minus"></span> 
+                              </button>
+                              <button id='makeMembersOwners' type="button" class="btn btn-default projectOwnerButtons memberSelectButton">Make Owners</button>
                           </div>
-                          <div class='col-sm-4'>
+                          <div class='col-sm-4' id='ownersColumn'>
                               <label for="owners">Owners</label>
                               <select multiple class='form-control' id="owners">
-                                  <option value='elem_1'>elem 1</option>
-                                  <option value='elem_2'>elem 2</option>
-                                  <option value='elem_3'>elem 3</option>
-                                  <option value='elem_4'>elem 4</option>
                               </select>
+                              <button id='addOwnerToProjectButton' title="Add new owner to project" data-toggle="tooltip" type="button" class="btn btn-default projectOwnerButtons">
+                                  <span class="glyphicon glyphicon-plus"></span> 
+                              </button>
+                              <button id='removeMemberOwnership' title="Remove ownership" data-toggle="tooltip" type="button" class="btn btn-default projectOwnerButtons ownerSelectButton">
+                                  <span class="glyphicon glyphicon-minus"></span> 
+                              </button>
+                          </div>
+                      </div>
+                      <div class='row'>
+                          <div class='col-sm-1'>
+                              <button type="button" class="btn btn-link">Leave project</button>
+                          </div>
+                          <div class='col-sm-1 projectOwnerButtons'>
+                              <button id='makePublicButton' type="button" class="btn btn-link">Make Project Public</button>
+                              <button id='makePrivateButton' type="button" class="btn btn-link">Make Project Private</button>
                           </div>
                       </div>
                   </div>
@@ -182,6 +198,45 @@ if (isset($_SESSION['username'])) { ?>
 
             </div>
         </div>
+
+        <div id="addUserToProjectModal" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add User</h4>
+              </div>
+              <div class="modal-body">
+                <form id="addUserToProjectForm" method="post" class="form-horizontal">
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label" for="username">Username</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="userToAddToProject" placeholder="name"/>
+                        </div>
+                    </div>
+                    <div class="col-sm-offset-2 col-sm-10">
+                      <div class="checkbox">
+                        <label><input id="ownerCheckbox" type="checkbox"/>Owner</label>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-5 col-xs-offset-3">
+                            <button type="button" class="btn btn-primary" id="addUserToProjectSubmissionButton">Submit</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="submit">Close</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
         <script src="scripts/account.js"></script> <!--This must be here! There is a check to see if an ID exists that fails if it is executed before the id is read.-->
     </body>
 <?PHP } else {  

@@ -189,7 +189,7 @@ function projectExists($connected_db, $projectName) {
 
 function addProject($connected_db, $projectName, $isPrivate, $userId) {
     $private = ($isPrivate === "true") ? '1' : '0';
-    $query = "call AddProject({$userId}, '$projectName', {$private})";
+    $query = "call AddProject('$projectName', {$private}, {$userId})";
     $result = $connected_db->query($query);
     return ($result && ($row = $result->fetch_assoc())) ? $row['ProjectId'] : null;
 }
@@ -276,6 +276,15 @@ function userIsMemberOfProject($connected_db, $projectName, $userId) {
     return ($result->fetch_assoc()) ? true : false;
 }
 
+function isUserProjectAdmin($connected_db, $projectName, $userId) {
+    $query = "select pm.Admin from ProjectMembers pm left join Project p on pm.ProjectId = p.ProjectId where p.ProjectName = '$projectName' and pm.UserId = {$userId}";
+    $result = $connected_db->query($query);
+    if ($row = $result->fetch_assoc()) {
+        return ($row['Admin']) ? true : false;
+    }
+    return false;
+}
+
 function getMembersOfProject($connected_db, $projectName) {
     $query = "select u.UserName, pm.Admin from User u inner join ProjectMembers pm on u.UserId = pm.UserId Inner Join Project p on p.ProjectId = pm.ProjectId where p.ProjectName = '$projectName'";
     $result = $connected_db->query($query);
@@ -284,6 +293,19 @@ function getMembersOfProject($connected_db, $projectName) {
         $members[] = new ProjectMember($row['UserName'], ($row['Admin']) ? true : false);
     }
     return $members;
+}
+
+function userAlreadyMemberOfProject($connected_db, $projectName, $usernameToAdd) {
+    $query = "select * from ProjectMembers pm left join Project on pm.ProjectId = p.ProjectId left join User u on pm.UserId = u.UserId where p.ProjectName = '$projectName' and u.UserName = '$usernameToAdd'";
+    $result = $connected_db->query($query);
+    return ($result);
+}
+
+function addProjectMember($connected_db, $projectName, $usernameToAdd, $isOwner) {
+    $owner = ($isOwner === "true") ? "1" : "0";
+    $query = "insert into ProjectMembers(UserId, ProjectId, Admin) select (select UserId from User where UserName = '$usernameToAdd' and Banned <> 1 and Deleted <> 1) as UserId, (select ProjectId from Project where ProjectName = '$projectName') as ProjectId, {$owner}";
+    $result = $connected_db->query($query);
+    return ($result);
 }
 
 ?>
