@@ -29,6 +29,7 @@ if (is_null($db_conn)) {
     var content_id = <?php echo $content->id; ?>;
 </script>
 <script src="scripts/content.js"></script>
+<script src="scripts/index.js"></script>
 <script src="scripts/submitComment.js"></script>
 <script src="scripts/jquery.autogrowtextarea.js"></script>
 
@@ -106,7 +107,7 @@ if (is_null($db_conn)) {
                 <div class='col-xs-2 col-md-2'>
                 </div>
                 <div class='col-xs-10 col-md-10 panel panel-default'>
-                    <span>Submitted by: {$user}</span>
+                    <span class='submittedby'>Submitted by: {$user}</span>
                     <pre id='parent' class='pre-scrollable'>{$comment->comment}</pre>
 			    </div>
             </div>";
