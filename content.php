@@ -26,7 +26,7 @@ if (is_null($db_conn)) {
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <link href="lib/syntaxHighlighting/prism.css" rel="stylesheet" />
 <script type="text/javascript">
-    var content_id = "<?php echo $content->id; ?>";
+    var content_id = <?php echo $content->id; ?>;
 </script>
 <script src="scripts/content.js"></script>
 <script src="scripts/submitComment.js"></script>
