@@ -34,7 +34,7 @@ if (isset($_SESSION['username'])) { ?>
             <h2>Hi <?PHP echo "{$_SESSION['username']}.";?> Manage your account here!</h2>
 
             <ul class="nav nav-pills">
-                <li class="active"><a data-toggle="pill" href="#ResetPwdTab">Reset Password</a></li>
+                <li><a data-toggle="pill" href="#ResetPwdTab">Reset Password</a></li>
                 <li><a data-toggle="pill" href="#ChangePwdTab">Change Password</a></li>
                 <li><a data-toggle="pill" href="#ChangeSecurityQuestionTab">Change Security Question</a></li>
                 <?PHP
