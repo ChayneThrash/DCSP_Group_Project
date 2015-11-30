@@ -1,9 +1,6 @@
 var commentValid = false;
 
-$(document).ready(function () {
-    $('#comment').autoGrow();
-   
-});
+
 
 function parentcomment() {
     if (validateComment()) { 
