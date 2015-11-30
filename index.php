@@ -50,7 +50,7 @@ if (is_null($db_conn)) {
         <div class='panel-body'>
             <div class='row'>
 		        <div class='col-sm-1 text-left'>
-		        <button type='button' onclick='vote(0)'>
+		        <button type='button' onclick='vote(0,{$content[$entry]->id}); history.go(0);'>
 				<span class='glyphicon glyphicon-chevron-up'></span>
 				</button>
 		        </div>
@@ -60,7 +60,7 @@ if (is_null($db_conn)) {
 	        </div>
 	        <div class='row'>
 		        <div class='col-sm-1 text-left'>
-		        <button type='button' onclick='vote(1)'>
+		        <button type='button' onclick='vote(1, {$content[$entry]->id}); history.go(0)'>
 				<span class='glyphicon glyphicon-chevron-down'></span>
 				</button>
 		        </div>

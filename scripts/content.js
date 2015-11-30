@@ -1,8 +1,8 @@
-function vote(vote) {
+function vote(vote, contentid) {
 	$.ajax({
 		type: "POST",
 		url: "ajax/vote.php",
-		data: {contentid: content_id, vote: vote},
+		data: {contentid: contentid, vote: vote},
 		success: updateVote
 		});
 }
@@ -19,6 +19,6 @@ function updateVote(output){
 		window.alert("You cannot downvote twice on one submission.");
 	}
 	else{
-		$("#score").html("Score: " + output);
+		$("#score").html("Current Score: " + output);
 	}
 }

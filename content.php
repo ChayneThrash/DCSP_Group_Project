@@ -68,13 +68,13 @@ if (is_null($db_conn)) {
          
         <div class="btn-group-vertical btn-group-sm">
 		<!-- The 1 in the vote() function is downvote and 0 is upvote -->
-        <button type='button' class='btn btn-default' onclick='vote(0)'>
+        <button type='button' class='btn btn-default' onclick='vote(0, content_id)'>
 	        <span class='glyphicon glyphicon-chevron-up'></span>
 	    </button>
         <?php
-        echo "<span id='score'>Score: {$content->score}</span>";
+        echo "<span id='score'>Current Score: {$content->score}</span>";
         ?>
-        <button type='button' class='btn btn-default' onclick='vote(1)'>
+        <button type='button' class='btn btn-default' onclick='vote(1, content_id)'>
 	        <span class='glyphicon glyphicon-chevron-down'></span>
 	    </button>
         </div>
