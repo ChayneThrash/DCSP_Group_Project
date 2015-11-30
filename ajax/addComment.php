@@ -30,7 +30,7 @@ else {
                 }else{
                     $response = "success";
                 }
-    } else($parentid != null){
+    } elseif($parentid != null){
             if(!addChildComment($db_conn, $_SESSION['userid'], $comment, $contentid, $parentid)){
                 $response = "Unknown error adding child comment.";
             }else{

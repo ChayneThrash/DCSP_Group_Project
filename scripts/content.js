@@ -1,4 +1,5 @@
 function upvote(id) {
+
 	$.ajax({
 		type: "POST",
 		url: "ajax/upvote.php",
