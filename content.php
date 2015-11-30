@@ -25,9 +25,14 @@ if (is_null($db_conn)) {
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <link href="lib/syntaxHighlighting/prism.css" rel="stylesheet" />
+<script type="text/javascript">
+    var content_id = "<?php echo $content->id; ?>";
+</script>
 <script src="scripts/content.js"></script>
 <script src="scripts/submitComment.js"></script>
 <script src="scripts/jquery.autogrowtextarea.js"></script>
+
+
 <title><?PHP echo "{$content->title}"; ?></title>
 
 </head>
@@ -49,7 +54,7 @@ if (is_null($db_conn)) {
 	<div class="row">
         
         <div class='col-xm-1 col-md-1'>
-   
+         
         <div class="btn-group-vertical btn-group-sm">
         <button type='button' class='btn btn-default' onclick='upvote()'>
 	        <span class='glyphicon glyphicon-chevron-up'></span>
@@ -71,9 +76,11 @@ if (is_null($db_conn)) {
     </div> 
 	</div>
     </div>
- 
+
+    <div>
      <textarea class='form-control noresize' id='comment' rows='3' placeholder='Comment'></textarea>
-     <button type='button' style="float: right;" class='btn btn-primary' onclick='comment()'>Comment</button>
+     <button type='button' style="float: right" class='btn btn-primary' onclick='parentcomment()'>Comment</button>
+    </div>
      <?php
      
      foreach($comments as $comment){

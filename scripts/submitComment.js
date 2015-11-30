@@ -1,45 +1,42 @@
 var commentValid = false;
-var parentValid=false;
-
 
 $(document).ready(function () {
     $('#comment').autoGrow();
    
 });
 
-
-function comment() {
-    if (validateComment() && parentValid) { //parentValid->validateParent() when working 
+function parentcomment() {
+    if (validateComment()) { 
         window.alert("if statement executed");
-        addComment();
-        $('#comment').clear();
-    } else if (validateComment() && !parentValid) {
-        window.alert("else if statement executed");
         addParentComment();
         $('#comment').clear();
-    }else{
+    } else {
         window.alert("Not a valid comment");
     }
 }
 
+function childcomment() {
+    if (validateComment()) {
+        window.alert("if statement executed");
+        addChildComment();
+        $('#childcomment').clear();
+    } else {
+        window.alert("Not a valid comment");
+    }
+}
 function validateComment() {
     var comment = $("#comment").val();
     commentValid = (comment.length !== 0);
     return commentValid;
 }
 
-function validateParent(){
-    var parentid=$('#parent').val();
-    parentValid=(parentid !== null);
-    return parentValid;
-}
 
-function addComment() {
+function addChildComment() {
     $.ajax({
         method: "POST",
         url: "ajax/addComment.php",
         data: {
-            comment: $("#comment").val(), contentid: $('#contentid').val(), parentid: $('#parent').val()
+            comment: $("#comment").val(), contentid: content_id, parentid: Number($('#parent').val())
         },
         success: processCommentSubmissionResponse
     });
@@ -50,7 +47,7 @@ function addParentComment() {
         method: "POST",
         url: "ajax/addComment.php",
         data: {
-            comment: $('#comment').val(), contentid: $('#contentid').val()
+            comment: $('#comment').val(), contentid: content_id
         },
         success: processCommentSubmissionResponse
     });

@@ -169,12 +169,17 @@ function addContent($connected_db, $userId, $title, $content, $projectId, $langu
 	return $result;
 }
 
-function addComment($connected_db, $userId, $comment, $contentid, $parentcommentid){
+function addComment($connected_db, $userId, $comment, $contentid){
     $query = "insert into Comment(UserId, Comment, ParentContentId, DateMade) Values({$userId},'$comment', {$contentid}, NOW())";
     $result = $connected_db->query($query);
     return $result;
 }
 
+function addChildComment($connected_db, $userId, $comment, $contentid, $parentcommentid){
+    $query = "insert into Comment(UserId, Comment, ParentContentId, ParentCommentId, DateMade) Values({$userId},'$comment', {$contentid}, {$parentcommentid}, NOW())";
+    $result = $connected_db->query($query);
+    return $result;
+}
 
 function projectExists($connected_db, $projectName) {
     $query = "select * from Project where ProjectName = '$projectName'";
@@ -226,7 +231,7 @@ function markAccountAsDeleted($connected_db, $userId) {
 }
 
 function checkUserVote($connected_db, $userId, $contentId){
-	$query = "Select VoteType From ContentVoting where UserId = {$userId} and ContentId = ${contentId}";
+	$query = "Select VoteType From ContentVoting where UserId = {$userId} and ContentId = {$contentId}";
 	$result = $connected_db->query($query);
 	return $result;
 }

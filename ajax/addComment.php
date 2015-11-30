@@ -17,15 +17,26 @@ $userObj = null;
 
 if (strlen($comment) === 0) {
     $response = "Invalid content";
-} else {
+} elseif($contentid === "" || $contentid ==0){
+    $response = "No content detected";
+}
+else {
 	$db_conn = getConnectedDb();
 	if (is_null($db_conn)) {
 		$response = "Error connecting to database. Try again later.";
-	} elseif(!addComment($db_conn, $_SESSION['userid'], $comment, $contentid, $parentid)) {
-		$response = "Unknown error.";
-	} else {
-		$response = "success";
-	}
+	} elseif($parentid==null){
+            if(!addComment($db_conn, $_SESSION['userid'], $comment, $contentid)) {
+		        $response = "Unknown error adding parent comment.";
+                }else{
+                    $response = "success";
+                }
+    } else($parentid != null){
+            if(!addChildComment($db_conn, $_SESSION['userid'], $comment, $contentid, $parentid)){
+                $response = "Unknown error adding child comment.";
+            }else{
+                $response = "success";
+            }
+	} 
 }
 
 echo $response;
