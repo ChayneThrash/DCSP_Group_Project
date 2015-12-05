@@ -1,7 +1,6 @@
 var commentValid = false;
 
 
-
 function parentcomment() {
     if (validateComment()) { 
         addParentComment();
@@ -10,7 +9,15 @@ function parentcomment() {
         window.alert("Not a valid comment");
     }
 }
-
+function addTextArea(i) {
+    var div = document.getElementById(i);
+    if(div.innerHTML==""){
+        div.innerHTML += "<br></br>"
+        div.innerHTML += "<textarea id='reply' placeholder='Reply'> </textarea>";
+        div.innerHTML += "\n<br />";
+        div.innerHTML += "<a style='float:right'>submit</a>";
+    }
+}
 function childcomment() {
     if (validateComment()) {
         addChildComment();
@@ -20,7 +27,7 @@ function childcomment() {
     }
 }
 function validateComment() {
-    var comment = $("#comment").val();
+    var comment = $("#childcomment").val();
     commentValid = (comment.length !== 0);
     return commentValid;
 }

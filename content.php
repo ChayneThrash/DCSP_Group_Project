@@ -4,7 +4,7 @@
 session_start(); 
 include "util/DbUtil.php";
 $db_conn = getConnectedDb();
-
+$i=0;
 $comments=array();
 if (is_null($db_conn)) {
 	$errorMsg = new Content(null,"No database found.",null,null,null,null,null,null,null);
@@ -97,26 +97,32 @@ if (is_null($db_conn)) {
      <?php
      
      foreach($comments as $comment){
-        //$childcomments=array();
-        //$childcomments=child_comments($db_conn, $comment->CommentId);
+        $childcomments=array();
+        $childcomments=child_comments($db_conn, $comment->parent_contentid,$comment->commentid);
         $user=getUserbyid($db_conn,$comment->userID);
+        $i++;
          echo
-            
-            "
-            <div class='row'>
+            "<div class='row'>
                 <div class='col-xs-2 col-md-2'>
                 </div>
                 <div class='col-xs-10 col-md-10 panel panel-default'>
                     <span class='submittedby'>Submitted by: {$user}</span>
                     <pre id='parent' class='pre-scrollable'>{$comment->comment}</pre>
+                    <a id='childcomment' onclick='addTextArea({$i})'>Comment</a>
+                    <a id='deletecomment' onclick='delete()'>Delete</a>
+                    <div id='{$i}'></div>
 			    </div>
             </div>";
             foreach($child_comments as $comment){
+                $user=getUserbyid($db_conn, $comment->userID);
                 echo
                 "<div class='row'>
-                    <div class='col-xs-8 col-xs-offset-4'>
+                    <div class='col-xs-4 col-md-4'></div>
+                    <div class='col-xs-8 col-md-8'>
+                    <span>Submitted by: {$user}</span>
                     <pre class='pre-scrollable'>{$comment->comment}</pre>
-                    </div>";
+                    </div>
+                </div>";
          }
     }
 ?>

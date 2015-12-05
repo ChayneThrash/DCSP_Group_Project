@@ -111,8 +111,8 @@ function getComments($connected_db, $id_num){
 	
 }
 
-function child_comments($connected_db, $id_num){
-    $query = "select * from Comment where ParentCommentId = $id_num order by Votes";
+function child_comments($connected_db, $id_num, $comment_id){
+    $query = "select * from Comment where ParentContentId = $id_num and ParentCommentId = $comment_id order by Votes";
 	$result = $connected_db->query($query);
 	$comments=array();
 	while($row = $result->fetch_assoc()){
