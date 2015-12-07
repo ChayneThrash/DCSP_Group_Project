@@ -108,7 +108,7 @@ if (is_null($db_conn)) {
                 <div class='col-xs-10 col-md-10 panel panel-default'>
                     <span class='submittedby'>Submitted by: {$user}</span>
                     <pre id='parent' class='pre-scrollable'>{$comment->comment}</pre>
-                    <a id='childcomment' onclick='addTextArea({$i})'>Comment</a>";
+                    <a onclick='addTextArea({$i}, {$comment->commentid})'>Comment</a>";
                     if($comment->userID==$_SESSION['userid'] or isAdmin($db_conn, $_SESSION['userid'])){
                     echo
                     "<a id='deletecomment' onclick='deletecomment({$comment->commentid})'>Delete</a>";}

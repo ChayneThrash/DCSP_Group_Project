@@ -9,27 +9,32 @@ function parentcomment() {
         window.alert("Not a valid comment");
     }
 }
-function addTextArea(i) {
+function addTextArea(i, id) {
     var div = document.getElementById(i);
     if(div.innerHTML==""){
-        div.innerHTML += "<br></br>"
-        div.innerHTML += "<textarea class='reply' placeholder='Reply'> </textarea>";
+        div.innerHTML += "<textarea class='reply' id='childcomment"+i+"' placeholder='Reply'> </textarea>";
         div.innerHTML += "\n<br />";
-        div.innerHTML += "<button style='float:right'>submit</button>";
+        div.innerHTML += "<button style='float:right' onclick='childcomment("+id+","+i+")'>submit</button>";
     } else{
         div.innerHTML = "";
     }
 }
-function childcomment() {
-    if (validateComment()) {
-        addChildComment();
-        $('#childcomment').clear();
+function childcomment(id, i) {
+    if (validateChildComment(i)) {
+        addChildComment(id,i);
+        $("#childcomment"+i).clear();
     } else {
         window.alert("Not a valid comment");
     }
 }
+function validateChildComment(i) {
+    var comment = $("#childcomment"+i).val();
+    commentValid = (comment.length !== 0);
+    return commentValid;
+}
+
 function validateComment() {
-    var comment = $("#childcomment").val();
+    var comment = $("#comment").val();
     commentValid = (comment.length !== 0);
     return commentValid;
 }
@@ -48,12 +53,12 @@ function deletecomment(id){
 }
 
 
-function addChildComment() {
+function addChildComment(id,i) {
     $.ajax({
         method: "POST",
         url: "ajax/addComment.php",
         data: {
-            comment: $("#comment").val(), contentid: content_id, parentid: Number($('#parent').val())
+            comment: $("#childcomment"+i).val(), contentid: content_id, parentid: id,
         },
         success: processCommentSubmissionResponse
     });

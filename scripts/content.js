@@ -41,6 +41,6 @@ function updateCommentVote(output){
     }else if(output==="down"){
         window.alert("You cannot downvote twice.");
     }else{
-       //
+       //stuff
     }
 }
