@@ -39,16 +39,16 @@ if (is_null($db_conn)) {
 </head>
 <body>
 <div class='container-fluid'>
-<div class="panel panel-default">
+<div class="panel panel-primary">
 	<div class='panel-heading'><h1>Code Cleanup!</h1>
         <div id='userInfo'>
         <?PHP
         if (isset($_SESSION['username'])) {
-            echo "<a id='account' href='account.php'>{$_SESSION['username']}</a>";
-            echo "<button id='logout' class='btn btn-link' role='link' type='button' name='op' value='Link 1'>Logout</button>";
+            echo "<a id='account' style='color: white' href='account.php'>{$_SESSION['username']}</a>";
+            echo "<button id='logout' style='color: white' class='btn btn-link' role='link' type='button' name='op' value='Link 1'>Logout</button>";
         } else {
-            echo "<a id='login' href='login.php'>Login</a>";
-            echo "<a id='register' href='registration.php'>No account? Register!</a>";
+            echo "<a id='login' style='color: white' href='login.php'>Login</a>";
+            echo "<a id='register' style='color: white' href='registration.php'>No account? Register!</a>";
         }
         ?>
     </div>
@@ -108,19 +108,27 @@ if (is_null($db_conn)) {
                 <div class='col-xs-10 col-md-10 panel panel-default'>
                     <span class='submittedby'>Submitted by: {$user}</span>
                     <pre id='parent' class='pre-scrollable'>{$comment->comment}</pre>
-                    <a id='childcomment' onclick='addTextArea({$i})'>Comment</a>
-                    <a id='deletecomment' onclick='delete()'>Delete</a>
-                    <div id='{$i}'></div>
+                    <a id='childcomment' onclick='addTextArea({$i})'>Comment</a>";
+                    if($comment->userID==$_SESSION['userid'] or isAdmin($db_conn, $_SESSION['userid'])){
+                    echo
+                    "<a id='deletecomment' onclick='deletecomment({$comment->commentid})'>Delete</a>";}
+                    echo
+                "<div id='{$i}'></div>
 			    </div>
             </div>";
-            foreach($child_comments as $comment){
+            foreach($childcomments as $comment){
                 $user=getUserbyid($db_conn, $comment->userID);
-                echo
+                echo 
                 "<div class='row'>
-                    <div class='col-xs-4 col-md-4'></div>
-                    <div class='col-xs-8 col-md-8'>
-                    <span>Submitted by: {$user}</span>
-                    <pre class='pre-scrollable'>{$comment->comment}</pre>
+                    <div class='col-xs-3 col-md-3'></div>
+                    <div class='col-xs-9 col-md-9 panel panel-default'>
+                    <span class='submittedby'>Submitted by: {$user}</span>
+                    <pre class='pre-scrollable'>{$comment->comment}</pre>";
+                    if($comment->userID==$_SESSION['userid'] or isAdmin($db_conn, $_SESSION['userid'])){
+                    echo
+                    "<a id='deletecomment' onclick='deletecomment({$comment->commentid})'>Delete</a>";}
+                    echo
+                    "
                     </div>
                 </div>";
          }

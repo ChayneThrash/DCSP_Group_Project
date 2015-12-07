@@ -6,6 +6,9 @@ a{cursor: pointer; cursor: hand;}
 .lead{
     font-size: 20px;
 }
+.reply{
+    width: 98%;
+}
 #content {
 	font-size: 14px;
     resize:vertical;

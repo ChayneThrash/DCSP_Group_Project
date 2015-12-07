@@ -13,9 +13,11 @@ function addTextArea(i) {
     var div = document.getElementById(i);
     if(div.innerHTML==""){
         div.innerHTML += "<br></br>"
-        div.innerHTML += "<textarea id='reply' placeholder='Reply'> </textarea>";
+        div.innerHTML += "<textarea class='reply' placeholder='Reply'> </textarea>";
         div.innerHTML += "\n<br />";
-        div.innerHTML += "<a style='float:right'>submit</a>";
+        div.innerHTML += "<button style='float:right'>submit</button>";
+    } else{
+        div.innerHTML = "";
     }
 }
 function childcomment() {
@@ -30,6 +32,19 @@ function validateComment() {
     var comment = $("#childcomment").val();
     commentValid = (comment.length !== 0);
     return commentValid;
+}
+
+function deletecomment(id){
+    if (window.confirm("Are you sure?")) {
+        $.ajax({
+            method: "POST",
+            url: "ajax/deleteComment.php",
+            data: {
+                commentid: id,
+            },
+            success: processDeleteCommentResponse
+        });
+    }
 }
 
 
@@ -57,9 +72,19 @@ function addParentComment() {
 
 function processCommentSubmissionResponse(response) {
     if (response === "success") {
+        window.alert("Comment submitted successfully.");
         window.location.reload();
     } else {
         $("#submissionErrorMsg").text(response);
         $("#commentSubmissionErrorModal").modal("show");
+    }
+}
+
+function processDeleteCommentResponse(response){
+    if (response==="success"){
+        window.alert("Comment deleted successfully.");
+        window.location.reload();
+    }else{
+        window.alert(response);
     }
 }

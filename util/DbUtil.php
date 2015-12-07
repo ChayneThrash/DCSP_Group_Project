@@ -230,6 +230,22 @@ function markAccountAsDeleted($connected_db, $userId) {
     return $result;
 }
 
+function deleteComment($connected_db, $commentid){
+    $query = "Delete From Comment where CommentId = {$commentid}";
+    $result = $connected_db->query($query);
+    return $result;
+}
+
+function isAdmin($connected_db, $userid){
+    $query = "select Admin from User where UserId = '$userid'";
+	$result = $connected_db->query($query);
+	if ($row = $result->fetch_assoc()) {
+		return ($row['Admin']) ? true : false;
+	} else {
+		return false;
+	}
+}
+
 function checkUserVote($connected_db, $userId, $contentId){
 	$query = "Select VoteType From ContentVoting where UserId = {$userId} and ContentId = {$contentId}";
 	$result = $connected_db->query($query);
