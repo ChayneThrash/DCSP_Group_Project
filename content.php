@@ -46,9 +46,11 @@ if (is_null($db_conn)) {
         if (isset($_SESSION['username'])) {
             echo "<a id='account' style='color: white' href='account.php'>{$_SESSION['username']}</a>";
             echo "<button id='logout' style='color: white' class='btn btn-link' role='link' type='button' name='op' value='Link 1'>Logout</button>";
+			echo "<a id='homePage' style='color: white' href='index.php'>Home Page</a>";
         } else {
             echo "<a id='login' style='color: white' href='login.php'>Login</a>";
             echo "<a id='register' style='color: white' href='registration.php'>No account? Register!</a>";
+			echo "<a id='homePage' style='color: white' href='index.php'>Home Page</a>";
         }
         ?>
     </div>
