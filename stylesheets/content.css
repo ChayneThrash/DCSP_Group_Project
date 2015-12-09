@@ -30,11 +30,21 @@ a{cursor: pointer; cursor: hand;}
 }
 #login{
 	position: absolute;
-    top: 0px;
+    top: 0;
+    right: 20px;
+}
+#logout{
+    position: absolute;
+    top: 0;
     right: 20px;
 }
 #register{
 	position: absolute;
+	top: 20px;
+	right: 20px;
+}
+#account{
+    position: absolute;
 	top: 20px;
 	right: 20px;
 }

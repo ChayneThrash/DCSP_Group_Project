@@ -100,7 +100,7 @@ function getContent($connected_db, $id_num){
 
 
 function getComments($connected_db, $id_num){
-    $query = "select * from Comment where ParentContentId = $id_num and ParentCommentId is NULL order by Votes";
+    $query = "select * from Comment where ParentContentId = $id_num and ParentCommentId is NULL and Removed = 0 order by Votes";
 	$result = $connected_db->query($query);
 	$comments=array();
 	while($row = $result->fetch_assoc()){
@@ -112,7 +112,7 @@ function getComments($connected_db, $id_num){
 }
 
 function child_comments($connected_db, $id_num, $comment_id){
-    $query = "select * from Comment where ParentContentId = $id_num and ParentCommentId = $comment_id order by Votes";
+    $query = "select * from Comment where ParentContentId = $id_num and ParentCommentId = $comment_id and Removed = 0 order by Votes";
 	$result = $connected_db->query($query);
 	$comments=array();
 	while($row = $result->fetch_assoc()){
@@ -231,11 +231,22 @@ function markAccountAsDeleted($connected_db, $userId) {
 }
 
 function deleteComment($connected_db, $commentid){
-    $query = "Delete From Comment where CommentId = {$commentid}";
+    $query = "Update Comment Set Removed = 1 where CommentId = {$commentid}";
     $result = $connected_db->query($query);
     return $result;
 }
 
+function deleteContent($connected_db, $contentid){
+    $query = "Update Content Set Removed = 1 where ContentId = {$contentid}";
+    $result=$connected_db->query($query);
+    return $result;
+}
+
+function banUser($connected_db, $userid){
+    $query = "Update User Set Banned = 1 where UserId = {$userid}";
+    $result = $connected_db->query($query);
+    return $result;
+}
 function isAdmin($connected_db, $userid){
     $query = "select Admin from User where UserId = '$userid'";
 	$result = $connected_db->query($query);
@@ -333,6 +344,14 @@ function isUserProjectAdmin($connected_db, $projectName, $userId) {
         return ($row['Admin']) ? true : false;
     }
     return false;
+}
+
+function isUserBanned($connected_db, $userid){
+    $query = "select * from User where UserId = {$userid}";
+    $result = $connected_db->query($query);
+    if($row = $result->fetch_assoc()){
+        return ($row['Banned']) ? true : false;
+    }
 }
 
 function getMembersOfProject($connected_db, $projectName) {

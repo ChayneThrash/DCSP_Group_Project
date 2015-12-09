@@ -86,7 +86,17 @@ if (is_null($db_conn)) {
         <div class="col-xm-11 col-md-11">
 	    <?PHP
 	    echo "<pre class='pre-scrollable'><code class='language-{$content->language}'>{$content->content}</code></pre>";
+        if($content->userID==$_SESSION['userid'] or (isAdmin($db_conn, $_SESSION['userid']) and !isAdmin($db_conn, $content->userID))){
+            echo 
+            "<a style='color: darkred' onclick='deletecontent({$content->id})'>Delete Content</a> ";
+        }
+
+        if (isAdmin($db_conn, $_SESSION['userid']) and !isAdmin($db_conn, $content->userID)){
+            echo
+            "<a style='color: darkred' onclick='banUser({$content->userID})'>&nbspBan User</a>";
+        }
 	    ?>
+        
 	    </div>
     </div> 
 	</div>
@@ -108,7 +118,7 @@ if (is_null($db_conn)) {
 				<div class='col-xs-1 col-mid-1'>
 				</div>
                 <div class='col-xs-1 col-md-1'>
-				<div class='btn-group-vertical btn-group-sm'>
+				<div class='btn-group-vertical btn-group-sm' style='float: right'>
 				<!-- The 1 in the vote() function is downvote and 0 is upvote -->
 				<button type='button' class='btn btn-default' onclick='commentvote(0, {$comment->commentid}); history.go(0)'>
 					<span class='glyphicon glyphicon-chevron-up'></span>
@@ -123,7 +133,7 @@ if (is_null($db_conn)) {
                     <span class='submittedby'>Submitted by: {$user}</span>
                     <pre id='parent' class='pre-scrollable'>{$comment->comment}</pre>
                     <a onclick='addTextArea({$i}, {$comment->commentid})'>Comment</a>";
-                    if($comment->userID==$_SESSION['userid'] or isAdmin($db_conn, $_SESSION['userid'])){
+                    if($comment->userID==$_SESSION['userid'] or (isAdmin($db_conn, $_SESSION['userid']) and !isAdmin($db_conn, $comment->userID))){
                     echo
                     "<a id='deletecomment' onclick='deletecomment({$comment->commentid})'>Delete</a>";}
                     echo
@@ -137,7 +147,7 @@ if (is_null($db_conn)) {
                     <div class='col-xs-2 col-mid-2'>
 					</div>
 					<div class='col-xs-1 col-md-1'>
-					<div class='btn-group-vertical btn-group-sm'>
+					<div class='btn-group-vertical btn-group-sm' style='float: right'>
 					<!-- The 1 in the vote() function is downvote and 0 is upvote -->
 					<button type='button' class='btn btn-default' onclick='commentvote(0, {$comment->commentid}); history.go(0)'>
 						<span class='glyphicon glyphicon-chevron-up'></span>
@@ -151,7 +161,7 @@ if (is_null($db_conn)) {
                     <div class='col-xs-9 col-md-9 panel panel-default'>
                     <span class='submittedby'>Submitted by: {$user}</span>
                     <pre class='pre-scrollable'>{$comment->comment}</pre>";
-                    if($comment->userID==$_SESSION['userid'] or isAdmin($db_conn, $_SESSION['userid'])){
+                    if($comment->userID==$_SESSION['userid'] or (isAdmin($db_conn, $_SESSION['userid']) and !isAdmin($db_conn, $comment->userID))){
                     echo
                     "<a id='deletecomment' onclick='deletecomment({$comment->commentid})'>Delete</a>";}
                     echo
