@@ -11,7 +11,7 @@ function commentvote(vote, commentid) {
 
     $.ajax({
         type: "POST",
-        url: "ajax/vote.php",
+        url: "ajax/commentVote.php",
         data: {commentid: id ,vote: commentvote},
         success: updateCommentVote
     });

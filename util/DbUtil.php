@@ -278,6 +278,38 @@ function insertContentVoting($connected_db, $userId, $contentId, $type){
 	return $result;
 }
 
+function checkUserCommentVote($connected_db, $userId, $commentId){
+	$query = "Select VoteType From CommentVoting where UserId = {$userId} and CommentId = {$commentId}";
+	$result = $connected_db->query($query);
+	$row = $result->fetch_assoc();
+	return $row['VoteType'];
+}
+
+function modCommentScore($connected_db, $commentId, $num){
+	$query = "Update Comment Set Votes= (Votes + {$num}) Where CommentId = {$commentId}";
+	$result = $connected_db->query($query);
+	return $result;
+}
+
+function commentVoting($connected_db, $userId, $commentId, $type){
+	$query = "Update CommentVoting Set VoteType = '{$type}' Where CommentId = {$commentId} and UserId = {$userId}";
+	$result = $connected_db->query($query);
+	return $result;
+}
+
+function getCommentScore($connected_db, $commentId){
+	$query = "Select Votes from Comment where CommentId = {$commentId}";
+	$result = $connected_db->query($query);
+	$row = $result->fetch_assoc();
+	return $row['Score'];
+}
+
+function insertCommentVoting($connected_db, $userId, $commentId, $type){
+	$query = "Insert Into CommentVoting (CommentId, UserId, VoteType) values ({$commentId}, {$userId}, '{$type}')";
+	$result = $connected_db->query($query);
+	return $result;
+}
+
 function getProjectsUserIsAMemberOf($connected_db, $userId) {
     $query = "Select p.ProjectName, p.ProjectId, p.Private from ProjectMembers pm Left Join Project p on pm.ProjectId = p.ProjectId where pm.UserId = {$userId}";
     $result = $connected_db->query($query);
