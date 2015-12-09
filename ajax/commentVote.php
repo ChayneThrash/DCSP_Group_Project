@@ -9,7 +9,7 @@ $vote = checkUserCommentVote($db_conn, $userId, $commentId);
 if(is_null($_SESSION["userid"])){
 	$output = "noUser";
 }
-else if($_POST['commentvote'] == 0){
+else if($_POST['vote'] == 0){
 	if($vote == 'u'){
 		$output = "up";
 	}
@@ -30,7 +30,7 @@ else if($_POST['commentvote'] == 0){
 		$output = getCommentScore($db_conn, $commentId);
 	}
 }
-else if($_POST['commentvote'] == 1){
+else if($_POST['vote'] == 1){
 	if($vote == 'd'){
 		$output = "down";
 	}

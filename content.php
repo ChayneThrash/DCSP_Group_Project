@@ -103,7 +103,19 @@ if (is_null($db_conn)) {
         $i++;
          echo
             "<div class='row'>
-                <div class='col-xs-2 col-md-2'>
+				<div class='col-xs-1 col-mid-1'>
+				</div>
+                <div class='col-xs-1 col-md-1'>
+				<div class='btn-group-vertical btn-group-sm'>
+				<!-- The 1 in the vote() function is downvote and 0 is upvote -->
+				<button type='button' class='btn btn-default' onclick='commentvote(0, {$comment->commentid}); history.go(0)'>
+					<span class='glyphicon glyphicon-chevron-up'></span>
+				</button>
+				<span>{$comment->votes}</span>
+				<button type='button' class='btn btn-default' onclick='commentvote(1, {$comment->commentid}); history.go(0)'>
+					<span class='glyphicon glyphicon-chevron-down'></span>
+				</button>
+				</div>
                 </div>
                 <div class='col-xs-10 col-md-10 panel panel-default'>
                     <span class='submittedby'>Submitted by: {$user}</span>
@@ -120,7 +132,20 @@ if (is_null($db_conn)) {
                 $user=getUserbyid($db_conn, $comment->userID);
                 echo 
                 "<div class='row'>
-                    <div class='col-xs-3 col-md-3'></div>
+                    <div class='col-xs-2 col-mid-2'>
+					</div>
+					<div class='col-xs-1 col-md-1'>
+					<div class='btn-group-vertical btn-group-sm'>
+					<!-- The 1 in the vote() function is downvote and 0 is upvote -->
+					<button type='button' class='btn btn-default' onclick='commentvote(0, {$comment->commentid}); history.go(0)'>
+						<span class='glyphicon glyphicon-chevron-up'></span>
+					</button>
+					<span>{$comment->votes}</span>
+					<button type='button' class='btn btn-default' onclick='commentvote(1, {$comment->commentid}); history.go(0)'>
+						<span class='glyphicon glyphicon-chevron-down'></span>
+					</button>
+					</div>
+					</div>
                     <div class='col-xs-9 col-md-9 panel panel-default'>
                     <span class='submittedby'>Submitted by: {$user}</span>
                     <pre class='pre-scrollable'>{$comment->comment}</pre>";
