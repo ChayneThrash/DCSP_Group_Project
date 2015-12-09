@@ -12,7 +12,7 @@ function commentvote(vote, commentid) {
     $.ajax({
         type: "POST",
         url: "ajax/commentVote.php",
-        data: {commentid: id ,vote: commentvote},
+        data: {commentid: commentid ,commentvote: vote},
         success: updateCommentVote
     });
 }
@@ -40,7 +40,5 @@ function updateCommentVote(output){
         window.alert("You cannot upvote twice.");
     }else if(output==="down"){
         window.alert("You cannot downvote twice.");
-    }else{
-       //stuff
     }
 }

@@ -108,7 +108,7 @@ if (is_null($db_conn)) {
 				<div class='col-xs-1 col-mid-1'>
 				</div>
                 <div class='col-xs-1 col-md-1'>
-				<div class='btn-group-vertical btn-group-sm'>
+				<div class='btn-group-vertical btn-group-sm' style='float: right'>
 				<!-- The 1 in the vote() function is downvote and 0 is upvote -->
 				<button type='button' class='btn btn-default' onclick='commentvote(0, {$comment->commentid}); history.go(0)'>
 					<span class='glyphicon glyphicon-chevron-up'></span>
