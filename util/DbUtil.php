@@ -100,7 +100,7 @@ function getContent($connected_db, $id_num){
 
 
 function getComments($connected_db, $id_num){
-    $query = "select * from Comment where ParentContentId = $id_num and ParentCommentId is NULL and Removed = 0 order by Votes";
+    $query = "select * from Comment where ParentContentId = $id_num and ParentCommentId is NULL and Removed = 0 order by Votes desc";
 	$result = $connected_db->query($query);
 	$comments=array();
 	while($row = $result->fetch_assoc()){
@@ -112,7 +112,7 @@ function getComments($connected_db, $id_num){
 }
 
 function child_comments($connected_db, $id_num, $comment_id){
-    $query = "select * from Comment where ParentContentId = $id_num and ParentCommentId = $comment_id and Removed = 0 order by Votes";
+    $query = "select * from Comment where ParentContentId = $id_num and ParentCommentId = $comment_id and Removed = 0 order by Votes desc";
 	$result = $connected_db->query($query);
 	$comments=array();
 	while($row = $result->fetch_assoc()){

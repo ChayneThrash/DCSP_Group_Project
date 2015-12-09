@@ -13,7 +13,7 @@ function commentvote(vote, commentid) {
     $.ajax({
         type: "POST",
         url: "ajax/commentVote.php",
-        data: {commentid: commentid ,vote: vote},
+        data: {commentid: commentid ,commentvote: vote},
         success: updateCommentVote
     });
 }
@@ -57,12 +57,23 @@ function updateVote(output){
 		$("#score").html("Current Score: " + output);
 	}
 }
+
 function contentdeletionresponse(response) {
     if (response==="success"){
         window.alert("Content deleted successfully");
         window.location = "index.php";
     }else{
         window.alert(response);
+    }
+}
+
+function updateCommentVote(output){
+    if(output==="noUser"){
+        window.alert("You must be logged in to vote.");
+    }else if(output==="up"){
+        window.alert("You cannot upvote twice.");
+    }else if(output==="down"){
+        window.alert("You cannot downvote twice.");
     }
 }
 function userbanresponse(response) {
