@@ -75,7 +75,7 @@ if (is_null($db_conn)) {
 	        <span class='glyphicon glyphicon-chevron-up'></span>
 	    </button>
         <?php
-        echo "<span id='score'>Current Score: {$content->score}</span>";
+        echo "<span id='score'>Score: {$content->score}</span>";
         ?>
         <button type='button' class='btn btn-default' onclick='vote(1, content_id)'>
 	        <span class='glyphicon glyphicon-chevron-down'></span>
@@ -135,7 +135,13 @@ if (is_null($db_conn)) {
                     <a onclick='addTextArea({$i}, {$comment->commentid})'>Comment</a>";
                     if($comment->userID==$_SESSION['userid'] or (isAdmin($db_conn, $_SESSION['userid']) and !isAdmin($db_conn, $comment->userID))){
                     echo
-                    "<a id='deletecomment' onclick='deletecomment({$comment->commentid})'>Delete</a>";}
+                    "
+                    <a id='deletecomment' onclick='deletecomment({$comment->commentid})'>Delete</a>";}
+
+                       if (isAdmin($db_conn, $_SESSION['userid']) and !isAdmin($db_conn, $comment->userID)){
+                             echo
+                                "<a style='color: darkred' onclick='banUser({$comment->userID})'>&nbsp&nbspBan User</a>";
+                 }
                     echo
                 "<div id='{$i}'></div>
 			    </div>
@@ -163,7 +169,13 @@ if (is_null($db_conn)) {
                     <pre class='pre-scrollable'>{$comment->comment}</pre>";
                     if($comment->userID==$_SESSION['userid'] or (isAdmin($db_conn, $_SESSION['userid']) and !isAdmin($db_conn, $comment->userID))){
                     echo
-                    "<a id='deletecomment' onclick='deletecomment({$comment->commentid})'>Delete</a>";}
+                    "
+                    <a id='deletecomment' onclick='deletecomment({$comment->commentid})'>Delete</a>";}
+                     
+                       if (isAdmin($db_conn, $_SESSION['userid']) and !isAdmin($db_conn, $comment->userID)){
+                             echo
+                                "<a style='color: darkred' onclick='banUser({$comment->userID})'>&nbsp&nbspBan User</a>";
+                    }
                     echo
                     "
                     </div>

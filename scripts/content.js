@@ -1,4 +1,4 @@
-var i = 0;
+
 function vote(vote, contentid) {
 	$.ajax({
 		type: "POST",
@@ -30,7 +30,6 @@ function deletecontent(id) {
 }
 
 function banUser(id) {
-    i++;
     if (
         window.confirm("Are you sure you want to ban this User?")) {
         $.ajax({
@@ -54,7 +53,7 @@ function updateVote(output){
 		window.alert("You cannot downvote twice on one submission.");
 	}
 	else{
-		$("#score").html("Current Score: " + output);
+		$("#score").html("Score: "+output);
 	}
 }
 
@@ -76,6 +75,7 @@ function updateCommentVote(output){
         window.alert("You cannot downvote twice.");
     }
 }
+
 function userbanresponse(response) {
     if (response === "success") {
         window.alert("User has been banned.");
