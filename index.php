@@ -9,9 +9,18 @@ if (is_null($db_conn)) {
 	$errorMsg = new Content(null,"No database found.",null,null,null,null,null,null,null);
 	$content = $errorMsg;
 } else {
-	$content = getContent_select10($db_conn, (($_GET['page'] * 10)), (($_GET['page'] + 1)*10));
 	$languages = getLanguages($db_conn);
     $projects = getProjects($db_conn);
+}
+
+if(isset($_GET['project'])){
+	$content = getContent_search_project($db_conn, $_GET['project']);
+}
+else if(isset($_GET['language'])){
+	$content = getContent_search_language($db_conn, $_GET['language']);
+}
+else{
+	$content = getContent_select10($db_conn, (($_GET['page'] * 10)), (($_GET['page'] + 1)*10));
 }
 ?>
 <html>
@@ -43,7 +52,17 @@ if (is_null($db_conn)) {
 	
 <div class="container-fluid">
 	<?PHP
+	if(empty($content)){
+		echo "<p>/</p>";
+		echo "<span>No Related Content</span>";
+		echo "<p>/</p>";
+	}
+	else{
 	for($entry = 0; $entry < 10; $entry++){
+	if(is_null($content[$entry])){
+		break;
+	}
+	else{
 	echo 
 
 	"<div class='panel panel-default'>
@@ -77,7 +96,7 @@ if (is_null($db_conn)) {
         </div>
     </div>
 	<p></p>
-	";}
+	";}}}
 	?>
 	
 	
@@ -130,6 +149,14 @@ if (is_null($db_conn)) {
             ?>
         </select>
 	</div>
+	<div class="col-sm-1">
+	<button type='button' class='btn btn-primary' onclick="search_language()">Search</button>
+	</div>
+	</div>
+	<p></p>
+	<div class="row">
+	<div class="col-sm-2">
+	</div>
 	<div class="col-sm-3">
 		<select class="form-control" id="ProjectDropdown">
             <option value="" selected disabled>Project</option>
@@ -141,8 +168,8 @@ if (is_null($db_conn)) {
             ?>
         </select>
 	</div>
-	<div class="col-sm-2">
-	<button type="button" class="btn btn-primary" id="SearchSubmissionButton">Search</button>
+	<div class="col-sm-1">
+	<button type='button' class='btn btn-primary' onclick="search_project()">Search</button>
 	</div>
 	</div>
 </div>

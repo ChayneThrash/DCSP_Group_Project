@@ -79,6 +79,28 @@ function getSecurityQuestions($connected_db) {
     return $questions;
 }
 
+function getContent_search_project($connected_db, $project){
+	$query = "select * from Content where ProjectId = {$project} order by Score desc";
+	$result = $connected_db->query($query);
+	$content = array();
+	while($row = $result->fetch_assoc()){
+		$content_entry = new Content($row['ContentId'], $row['Title'], $row['Content'], $row['Score'], $row['UserId'], $row['Language'], $row['ProjectId'], $row['Removed'], $row['DateMade']);
+		$content[] = $content_entry;
+	}
+	return $content;
+}
+
+function getContent_search_language($connected_db, $language){
+	$query = "select * from Content where Language = '{$language}' order by Score desc";
+	$result = $connected_db->query($query);
+	$content = array();
+	while($row = $result->fetch_assoc()){
+		$content_entry = new Content($row['ContentId'], $row['Title'], $row['Content'], $row['Score'], $row['UserId'], $row['Language'], $row['ProjectId'], $row['Removed'], $row['DateMade']);
+		$content[] = $content_entry;
+	}
+	return $content;
+}
+
 function getContent_select10($connected_db, $low, $high){
 	$query = "select * from Content order by Score desc limit $low,$high";
 	$result = $connected_db->query($query);
